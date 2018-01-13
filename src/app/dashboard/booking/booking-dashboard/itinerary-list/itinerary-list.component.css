@@ -1,0 +1,41 @@
+.day-box-tab {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #ac6d28;
+    color: white;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+}
+
+.day-box-tab-active {
+    background-color: #425159;
+    color: white;
+}
+
+.time-start-td {
+    /*background-color: #efd4b7;*/
+    width: 100px;
+    text-align: right;
+}
+
+.time-end-td {
+    background-color: ghostwhite;
+    width: 10px;
+    text-align: center;
+}
+
+.time-start {
+    background-color: white;
+}
+
+.time-icon-td {
+    text-align: right;
+}
+
+.status-label {
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100px;
+}

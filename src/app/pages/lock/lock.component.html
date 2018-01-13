@@ -1,0 +1,86 @@
+<div class="wrapper wrapper-full-page">
+    <nav class="navbar navbar-primary navbar-transparent navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/#/dashboard">
+                    <div class="nav-logo-txt"><img src="assets/img/logo.png"></div>
+                    <div class="nav-logo-txt-min"><img src="assets/img/logomin.png"></div>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="menu-example">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a style="cursor: pointer" (click)="navigateToLogin()">
+                            <i class="material-icons">open_in_browser</i> Logout
+                        </a>
+                    </li>
+                    <li class=" active ">
+                        <a href="/pages/lock">
+                            <i class="material-icons">lock_open</i> Lock
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="full-page lock-page" filter-color="black" data-image="assets/img/lock.jpeg">
+        <!--   you can change the color of the filter page using: data-color="blue | green | orange | red | purple" -->
+        <div class="content">
+            <form method="#" action="#">
+                <div class="card card-profile card-hidden">
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="avatar" src="../assets/img/faces/avatar.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            {{userFullName}}
+                        </h4>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Enter Password</label>
+                            <input type="password" [(ngModel)]="user.password" name="password"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button (click)="unlock()" type="button" class="btn btn-rose btn-round">Unlock</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a target="#" href="http://www.thegrandreceptions.com.au/">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a target="#" href="http://australianstrategicpartnerships.com/">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a target="#" href="http://52.39.159.71:8080/enquiry/">
+                                Enquiry
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">Copyright © 2006-
+                    {{test | date: 'yyyy'}}
+                    <a href="https://www.australianstrategicpartnerships.com">Strategic Partnership Solutions</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>

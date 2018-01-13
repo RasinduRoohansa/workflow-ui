@@ -1,0 +1,33 @@
+<form (submit)="createQuestionItem()">
+    <div class="modal-dialog" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cancel()">&times;</button>
+                <h4 class="modal-title">Create Question</h4>
+                <p class="category">
+                    Create your own question for selected template.
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="form-group label-floating">
+                    <select class="selectpicker" data-style="select-with-transition"
+                            required name="questiontype" [(ngModel)]="selectedQuestion"
+                            title="Choose a question type">
+                        <option disabled selected value="">Choose a question type</option>
+                        <option *ngFor="let question of questions" [ngValue]="question.id">
+                            <i class="material-icons" style="margin-right: 20px">{{question.icon}}</i>
+                            {{question.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Create
+                </button>
+                <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

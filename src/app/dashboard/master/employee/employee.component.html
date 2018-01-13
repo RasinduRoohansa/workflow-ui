@@ -1,0 +1,328 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="tab-content">
+      <div class="tab-pane active" id="description-1">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <div class="row">
+                    <div class="col-md-6">
+                      Employee
+                    </div>
+                    <div class="col-md-6">
+                      <form style="margin-top: 0px;margin-bottom: 0px" class="navbar-form navbar-right" role="search">
+                        <div class="form-group form-search is-empty">
+                          <input [(ngModel)]="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                        </div>
+                        <a type="submit" (click)="filterEmployees()" class="btn btn-info btn-round btn-just-icon">
+                          <i class="material-icons">search</i>
+                        </a>
+                        <a (click)="findAllEmployees()" type="button" class="btn btn-primary btn-round btn-just-icon">
+                          <i class="material-icons">refresh</i>
+                        </a>
+                        <span role="tablist">
+                          <a (click)="createItemPackage()" href="#description-2" role="tab" data-toggle="tab" class="btn btn-success btn-round btn-just-icon">
+                            <i class="material-icons">add_box</i>
+                          </a>
+                        </span>
+                      </form>
+                    </div>
+                  </div>
+                </h4>
+                <p class="category">
+
+                </p>
+              </div>
+              <!-- search aria end-->
+              <!-- add aria start-->
+              <div class="card-content table-responsive">
+                <table class="table">
+                  <tr *ngFor="let emp of employeeList">
+                    <td>
+                      <span role="tablist">
+                        <a class="edit-btn" href="#description-3" role="tab" data-toggle="tab" (click)="updateEmployee(emp.id)">
+                          <i class="material-icons">edit</i>
+                        </a>
+                      </span>
+                    </td>
+                    <td>
+                      <img style="cursor: pointer;transform: scale(1.3); width: 50px;height: 50px; border-radius: 50%;" *ngIf="emp.thumbnail" [src]="getImage(emp.thumbnail)"
+                        width="100%">
+                      <img style="cursor: pointer;transform: scale(1.3); width: 50px;height: 50px;" *ngIf="!emp.thumbnail" src="assets/img/noimage1.jpg"
+                        width="100%">
+                    </td>
+                    <td>
+                      <strong>
+                        {{emp.fullName}}
+                      </strong> | {{emp.streetOne}}
+                      <span *ngIf="emp.streetTwo">, {{emp.streetTwo}}</span>
+                      <span *ngIf="emp.city">, {{emp.city}}</span>
+                      <span *ngIf="emp.country">| {{emp.country}}</span>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <span>
+                            <i class="material-icons" style="font-size: 15px;">call</i>
+                            <a href="tel:{{emp.telephoneOne}}"> {{emp.telephoneOne}}</a>
+                          </span>
+                          <span *ngIf="emp.mobile"> ,
+                            <i class="material-icons" style="font-size: 15px;">smartphone</i>
+                            <a href="tel:{{emp.mobile}}"> {{emp.mobile}}</a>
+                          </span>
+                        </div>
+                        <div class="col-md-6">
+                          <span style="float: right" class="label label-info">{{emp.code}}</span>
+                          <span *ngIf="emp.email">
+                            <i class="material-icons" style="font-size: 15px;">email</i>
+                            <a href="mailto:{{emp.email}}" target="_top">{{emp.email}}</a>
+                          </span>
+                        </div>
+                      </div>
+                      <span style="font-size: 12px;color: grey">{{emp.createdBy}} | {{emp.createdDate | date:'medium'}}</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="description-2">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Add Employee
+              <form style="margin-top: 0px;margin-bottom: 0px" class="navbar-form navbar-right" role="search">
+                <span role="tablist" class="pull-right">
+                  <a href="#description-1" role="tab" data-toggle="tab" class="btn btn-rose btn-round btn-just-icon">
+                    <i class="material-icons">arrow_back</i>
+                  </a>
+                </span>
+              </form>
+            </h4>
+            <p class="category">
+
+            </p>
+          </div>
+          <div class="card-content">
+            <form (submit)="saveEmployee()" *ngIf="employee">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Full Name</label>
+                    <input required [(ngModel)]="employee.fullName" type="text" name="fullName" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Reg. Code</label>
+                    <input [(ngModel)]="employee.code" type="text" name="code" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Street Address</label>
+                    <input required [(ngModel)]="employee.streetOne" type="text" name="streetOne" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Street Address Line 2</label>
+                    <input [(ngModel)]="employee.streetTwo" type="text" name="streetTwo" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">City</label>
+                    <input [(ngModel)]="employee.city" type="text" name="city" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">State/ Province</label>
+                    <input [(ngModel)]="employee.state" type="text" name="state" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Postal / Zip Code</label>
+                    <input [(ngModel)]="employee.zipCode" type="text" name="zipCode" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Country</label>
+                    <input [(ngModel)]="employee.country" type="text" name="country" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Telephone </label>
+                    <input required [(ngModel)]="employee.telephoneOne" type="text" name="telephoneOne" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Mobile </label>
+                    <input [(ngModel)]="employee.mobile" type="text" name="mobile" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Fax</label>
+                    <input [(ngModel)]="employee.fax" type="text" name="fax" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">E-mail</label>
+                    <input [(ngModel)]="employee.email" type="text" name="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Employee Type </label>
+                    <!--  <input required [(ngModel)]="employee.fkEmpType" type="text" name="telephoneOne" class="form-control">-->
+                    <select class="selectpicker" data-style="select-with-transition" required name="employeetype" [(ngModel)]="employee.fkEmpType"
+                      title="Employee Type">
+                      <option disabled selected value="">Choose a employee type</option>
+                      <option *ngFor="let type of employeeTypeList" [ngValue]="type.id">
+                        {{type.employeeType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6" style="width: 260px;height: 202px;">
+                  <div *ngIf="!image" class="select-img1" (click)="selectImg()">
+
+                  </div>
+                  <img (click)="selectImg()" class="view-big" style="cursor: pointer;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro"
+                    *ngIf="image" [src]="image.image" width="100%">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-fill btn-info">Add
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="description-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Update Employee
+              <form style="margin-top: 0px;margin-bottom: 0px" class="navbar-form navbar-right" role="search">
+                <span role="tablist" class="pull-right">
+                  <a href="#description-1" role="tab" data-toggle="tab" class="btn btn-rose btn-round btn-just-icon">
+                    <i class="material-icons">arrow_back</i>
+                  </a>
+                </span>
+              </form>
+            </h4>
+            <p class="category">
+
+            </p>
+          </div>
+          <div class="card-content">
+            <form (submit)="updateEmployee()" *ngIf="employeeUpdate">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Full Name</label>
+                    <input required [(ngModel)]="employeeUpdate.fullName" type="text" name="fullName" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Street Address</label>
+                    <input required [(ngModel)]="employeeUpdate.streetOne" type="text" name="streetOne" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Street Address Line 2</label>
+                    <input [(ngModel)]="employeeUpdate.streetTwo" type="text" name="streetTwo" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">City</label>
+                    <input [(ngModel)]="employeeUpdate.city" type="text" name="city" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">State/ Province</label>
+                    <input [(ngModel)]="employeeUpdate.state" type="text" name="state" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Postal / Zip Code</label>
+                    <input [(ngModel)]="employeeUpdate.zipCode" type="text" name="zipCode" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Country</label>
+                    <input [(ngModel)]="employeeUpdate.country" type="text" name="country" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Telephone </label>
+                    <input required [(ngModel)]="employeeUpdate.telephoneOne" type="text" name="telephoneOne" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Mobile </label>
+                    <input [(ngModel)]="employeeUpdate.mobile" type="text" name="mobile" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Fax</label>
+                    <input [(ngModel)]="employeeUpdate.fax" type="text" name="fax" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">E-mail</label>
+                    <input [(ngModel)]="employeeUpdate.email" type="text" name="email" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Employee Type </label>
+                    <!--  <input required [(ngModel)]="employee.fkEmpType" type="text" name="telephoneOne" class="form-control">-->
+                    <select class="selectpicker" data-style="select-with-transition" required name="employeetype" [(ngModel)]="employee.fkEmpType"
+                      title="Employee Type">
+                      <option disabled selected value="">Choose a employee type</option>
+                      <option *ngFor="let type of employeeTypeList" [ngValue]="type.id">
+                        {{type.employeeType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-fill btn-info">Add
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="card-title">
+                Driver Allocation
+            </h4>
+            <p class="category">
+                Select a driver from the drop down list and press allocate button.
+            </p>
+        </div>
+        <div class="modal-body">
+            <select class="selectpicker" data-live-search="true" [(ngModel)]="driverAllocation.fkDriver"
+                    data-style="select-with-transition" title="Choose Driver"
+                    data-size="7">
+                <option *ngFor="let driver of driverList" [ngValue]="driver.id">
+                    {{driver.fullName}}
+                </option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" (click)="allocateDriver()" class="btn btn-primary">ALLOCATE</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

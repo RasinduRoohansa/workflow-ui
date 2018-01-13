@@ -1,0 +1,158 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <!--<div class="row">-->
+        <!--<div class="col-md-6">-->
+        <!--<div>-->
+        <!--<ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">-->
+        <!--<li class="active">-->
+        <!--<a href="#description-1" role="tab" data-toggle="tab">-->
+        <!--&lt;!&ndash;<i class="material-icons md-18">vpn_key</i> &ndash;&gt;-->
+        <!--Event Types-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="#description-2" role="tab" data-toggle="tab">&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<i class="material-icons md-18">vpn_key</i> &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;Create New Type&ndash;&gt;-->
+        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="card-title">Event Types</h4>
+                                        <p class="category">
+                                            Customize & add event type to the system and select an images for related
+                                            event types.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form style="margin-top: 0px;margin-bottom: 0px"
+                                              class="navbar-form navbar-right" role="search">
+                                            <div class="form-group form-search is-empty">
+                                                <input [(ngModel)]="searchText"
+                                                       (keyup)="filter()"
+                                                       name="searchfilter" type="text" class="form-control"
+                                                       placeholder="Search">
+                                            </div>
+                                            <button type="submit" (click)="filter()"
+                                                    class="btn btn-info btn-round btn-just-icon">
+                                                <i class="material-icons">search</i>
+                                            </button>
+                                            <button type="button" (click)="refresh()"
+                                                    class="btn btn-primary btn-round btn-just-icon">
+                                                <i class="material-icons">refresh</i>
+                                            </button>
+                                            <button (click)="addEventType()" type="button"
+                                                    class="btn btn-success btn-round btn-just-icon">
+                                                <i class="material-icons">add_box</i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content table-full-width">
+                                <div class="table-responsive">
+                                    <div class="form-group label-floating">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 200px">Event Type</th>
+                                                <th colspan="2">Description</th>
+                                                <th></th>
+                                                <th>#</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let type of eventTypes">
+                                                <td>
+                                                    <a style="margin-left: 20px" (click)="updateEventType(type)"
+                                                       class="edit-btn">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>
+                                                    <span>{{type.eventType}}</span></td>
+                                                <td>
+                                                    <img style="cursor: pointer;transform: scale(1.3);"
+                                                         *ngIf="type.thumbnail" [src]="getImage(type.thumbnail)"
+                                                         width="100%">
+                                                    <img style="cursor: pointer;transform: scale(1.3);"
+                                                         *ngIf="!type.thumbnail" src="assets/img/noimage1.jpg"
+                                                         width="100%">
+                                                </td>
+                                                <td style="padding-left: 20px">
+                                                    {{type.description}}
+                                                    <br/>
+                                                    <span style="font-size: 12px;color: grey">
+                                                        {{type.createdByFullName}} |
+                                                    {{type.createdDate | date:'medium'}}
+                                                    </span>
+                                                </td>
+                                                <td><span style="float: right"
+                                                          class="label label-info">{{type.code}}</span></td>
+                                                <td>
+                                                    <button *ngIf="type.activated"
+                                                            (click)="activeDeactivate(type)"
+                                                            class="btn btn-danger btn-round btn-fab btn-fab-mini">
+                                                        <i class="material-icons">delete_sweep</i>
+                                                    </button>
+                                                    <button class="btn btn-success btn-round btn-fab btn-fab-mini"
+                                                            (click)="activeDeactivate(type)"
+                                                            *ngIf="!type.activated">
+                                                        <i class="material-icons">done</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="description-2">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Add new event type</h4>
+                                <p class="category">
+
+                                </p>
+                            </div>
+                            <div class="card-content">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Event Type</label>
+                                    <input type="text" [(ngModel)]="eventType.eventType" name="eventType"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code</label>
+                                    <input type="text" [(ngModel)]="eventType.code" name="code" class="form-control">
+                                </div>
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Description</label>
+                                    <input type="text" [(ngModel)]="eventType.description" name="description"
+                                           class="form-control">
+                                </div>
+                                <button (click)="saveEventType()" type="submit" class="btn btn-fill btn-info">Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            {{venueSpace.name}} - {{venueSpace.venue.venueName}}
+                            <form style="margin-top: 0px;margin-bottom: 0px"
+                                  class="navbar-form navbar-right">
+                                <button (click)="goBackPage()"
+                                        class="btn btn-round btn-rose btn-just-icon">
+                                    <i class="material-icons">arrow_back</i>
+                                </button>
+                            </form>
+                        </h4>
+                        <p class="category">
+                            <i class="material-icons">location_on</i>
+                            {{venueSpace.venue.streetOne}}
+                            <span *ngIf="venueSpace.venue.streetTwo">
+                                , {{venueSpace.venue.streetTwo}}
+                            </span>
+                            <span *ngIf="venueSpace.venue.city">
+                                , {{venueSpace.venue.city}}
+                            </span>
+                            <span *ngIf="venueSpace.venue.country">
+                                , {{venueSpace.venue.country}}
+                            </span>
+                            <span *ngIf="venueSpace.venue.state">| {{venueSpace.venue.state}}</span>
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <div class="venue-address">
+                            <span *ngIf="venueSpace.venue.web" style="margin-right: 30px">
+                                <i class="material-icons" style="font-size: 13px">link</i>
+                                <a target="#" href="http://{{venueSpace.venue.web}}">{{venueSpace.venue.web}}</a>
+                            </span>
+                            <span *ngIf="venueSpace.venue.email" style="margin-right: 30px">
+                                <i class="material-icons" style="font-size: 13px">email</i>
+                                <a href="mailto:{{venueSpace.venue.email}}" target="_top">{{venueSpace.venue.email}}</a>
+                            </span>
+                            <span *ngIf="venueSpace.venue.phone">
+                                <i class="material-icons" style="font-size: 13px">settings_phone</i>
+                                <a href="tel:{{venueSpace.venue.phone}}">{{venueSpace.venue.phone}}</a>
+                            </span>
+                        </div>
+                        <div *ngIf="venueSpace.description">
+                            <br/>
+                            {{venueSpace.description}}
+                            <br/>
+                        </div>
+                        <br/>
+                        <img class="view-big-more"
+                             style="cursor: pointer;object-fit: cover;height: 300px;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro"
+                             [src]="image.image" width="100%"/>
+
+                        <br/>
+                    </div>
+                    <div class="card-footer" style="color: grey">
+                        <i class="material-icons" style="font-size: 13px">person</i>{{venueSpace.createdByFullname}}
+                        | <i class="material-icons" style="font-size: 13px">date_range</i>
+                        {{venueSpace.createdDate | date:'medium'}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Venue/Space Facilities
+                            <form style="margin-top: 0px;margin-bottom: 0px"
+                                  class="navbar-form navbar-right" role="search">
+                                <button type="button" (click)="addFacility()"
+                                        class="btn btn-success btn-round btn-just-icon">
+                                    <i class="material-icons">add_box</i>
+                                </button>
+                            </form>
+                        </h4>
+                        <br/>
+                    </div>
+                    <div class="card-content table-full-width">
+
+                        <div class="table-responsive">
+                            <div class="form-group label-floating">
+                                <table class="table table-hover table-striped">
+                                    <tbody>
+                                    <tr *ngFor="let facility of facilities">
+                                        <td><i style="font-size: 12px;margin-right: 20px" class="material-icons">assignment_turned_in</i>
+                                            {{facility.facility}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--<div class="card-footer" style="color: grey">-->
+                    <!--<i class="material-icons" style="font-size: 13px">person</i>Stelan Briyan Simonsz ( SYSTEM )-->
+                    <!--| <i class="material-icons" style="font-size: 13px">date_range</i> Nov 5, 2017,-->
+                    <!--5:21:58 PM-->
+
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2" *ngFor="let image of venueSpace.images">
+
+                    <img (click)="viewImage(image.fkId)" class="hover-shadow1" width="100%" style="height: 95px"
+                         [src]="getImage(image.image)">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

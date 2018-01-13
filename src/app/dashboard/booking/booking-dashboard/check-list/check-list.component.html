@@ -1,0 +1,112 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" *ngIf="booking">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="card-title">Check List</h4><br/>
+                            </div>
+                            <div class="col-md-8">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <button (click)="navigateToBooking()"
+                                            class="btn btn-rose btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">arrow_back</i>
+                                    </button>
+                                    <button (click)="changeCheckListTemplate()"
+                                            class="btn btn-warning btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">autorenew</i>
+                                    </button>
+                                    <button (click)="addCheckListItem()"
+                                            class="btn btn-warning btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="next-evt center-block">
+                                    <span style="font-weight: bold">{{booking.startDate | date: 'MMM'}}</span><br/>
+                                    <span style="font-size: 20px">{{booking.startDate | date: 'dd'}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <span style="font-size: 25px">{{booking.enquiry.eventType}}</span>
+                                <strong style="font-style: italic">
+                                    {{booking.enquiry.customer.firstName}}
+                                    {{booking.enquiry.customer.lastName}}
+                                </strong> |
+                                {{booking.enquiry.venue}} - {{booking.enquiry.venueName}}<br/>
+                                <span style="color: grey;font-size: 12px">
+                                    From <strong>{{booking.startDate | date:'short'}}</strong> To <strong>{{booking.endDate | date:'short'}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="color: grey;font-size: 12px">{{booking.createdByFullname}} | {{booking.createdDate | date:'medium'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content table-full-width">
+                        <table class="table table-striped">
+                            <tr *ngFor="let item of checkListItems">
+                                <td class="status-icon">
+                                    <i *ngIf="item.sheduled == true" class="material-icons">query_builder</i>
+                                    <i *ngIf="item.sheduled == false" class="material-icons">receipt</i>
+                                </td>
+                                <td>
+                                    <strong class="allocated-title">{{item.itemName}}</strong><br/>
+
+                                    <div>
+                                        <tooltip-content #doneTimeTip>
+                                            <b>Completed Time<br/>{{item.doneTime | date:'medium'}}</b>
+                                        </tooltip-content>
+                                    </div>
+                                    <span class="label label-success label-cmp"
+                                          [tooltip]="doneTimeTip" [tooltipAnimation]="true"
+                                          *ngIf="item.done == true">Completed</span>
+                                    <span style="font-weight: bold;color: grey;font-size: 12px"
+                                          *ngIf="item.sheduled == true">
+                                            <span *ngIf="item.sheduleType == 'ONTIME'">
+                                                Scheduled On Time : {{item.sheduleTime | date:'medium'}}
+                                            </span>
+                                            <span *ngIf="item.sheduleType != 'ONTIME'">
+                                                {{item.sheduleMinute}} Minutes {{item.sheduleType.toLowerCase()}} the event.
+                                            </span>
+                                    </span>
+                                </td>
+                                <td style="text-align: right">
+                                    <i class="material-icons check-box-icon"
+                                       *ngIf="item.done == true">check_box</i>
+                                    <i class="material-icons n-check-box-icon"
+                                       (click)="doneItem(item)"
+                                       *ngIf="item.done == null">check_box_outline_blank</i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-4">-->
+            <!--<div class="card">-->
+            <!--<div class="card-content">-->
+            <!--<textarea placeholder="Write a text here" style="height: 150px"></textarea>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+
+
+    </div>
+</div>

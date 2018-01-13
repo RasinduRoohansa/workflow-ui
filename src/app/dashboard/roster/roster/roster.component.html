@@ -1,0 +1,54 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class=" col-md-12">
+        <div class="card">
+          <div class="header">
+            <h3>Roster Alocation</h3>
+            <p>Here is a subtitle for this table</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content table-responsive table-full-width">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <!---->
+                  <th>Booking Number</th>
+                  <th>Created By</th>
+                  <th>Created Date</th>
+                  <th>Customer</th>
+                  <th>Sales Person</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of bookings">
+                  <!---->
+                  <td>{{item.bookingNumber}}</td>
+                  <td>{{item.bookingCreatedBy}}</td>
+                  <td>{{item.createDate | date : 'short'}}</td>
+                  <td>{{item.customer}}</td>
+                  <td>{{item.salesPerson}}</td>
+                  <td>
+                      <div>
+                          <tooltip-content #allocateToolTip>
+                              <b>Allocate a employees to continue event</b>
+                          </tooltip-content>
+                      </div>
+                      
+                    <a (click)="navigateToAllocation(item.id)"  type="button" class="btn btn-simple btn-info btn-icon like" mattooltip="Like" 
+                    cdk-describedby-host="" style="touch-action: none; user-select: none; -webkit-user-drag: none; 
+                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);" [tooltip]="allocateToolTip" [tooltipAnimation]="true">
+                      <i class="material-icons">person_add</i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

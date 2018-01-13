@@ -1,0 +1,134 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" *ngIf="booking">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="card-title">Table Plan</h4><br/>
+                            </div>
+                            <div class="col-md-8">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <button (click)="navigateToBooking()"
+                                            class="btn btn-rose btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">arrow_back</i>
+                                    </button>
+                                    <button (click)="changeToDrawMode()"
+                                            class="btn btn-warning btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">zoom_out_map</i>
+                                    </button>
+                                    <button (click)="changeToViewMode()"
+                                            class="btn btn-warning btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">insert_drive_file</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="next-evt center-block">
+                                    <span style="font-weight: bold">{{booking.startDate | date: 'MMM'}}</span><br/>
+                                    <span style="font-size: 20px">{{booking.startDate | date: 'dd'}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <span style="font-size: 25px">{{booking.enquiry.eventType}}</span>
+                                <strong style="font-style: italic">
+                                    {{booking.enquiry.customer.firstName}}
+                                    {{booking.enquiry.customer.lastName}}
+                                </strong> |
+                                {{booking.enquiry.venue}} - {{booking.enquiry.venueName}}<br/>
+                                <span style="color: grey;font-size: 12px">
+                                    From <strong>{{booking.startDate | date:'short'}}</strong> To <strong>{{booking.endDate | date:'short'}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span style="color: grey;font-size: 12px">{{booking.createdByFullname}} | {{booking.createdDate | date:'medium'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div *ngFor="let table of tablePlanHeaders; let i = index"
+                         class="table-plan-box {{fkDocument==table.id? 'active-table-plan':''}}"
+                         (click)="changeTablePlan(table)">
+                        <strong>Table Plan {{tablePlanHeaders.length - i}}</strong>
+                        <label class="label label-success" *ngIf="i==0">LATEST</label> <br/>
+                        <span style="font-size: 12px;color: grey">
+                                       <i class="material-icons" style="font-size: 12px">date_range</i> {{table.createdDate | date:'medium'}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card" *ngIf="drawMode == false">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="card-title">Upload Table Plan</h4><br/>
+                            </div>
+                            <div class="col-md-8">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <button (click)="uploadTablePlan()"
+                                            class="btn btn-info btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">file_upload</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="table-responsive" *ngFor="let plan of tablePlans">
+
+                                    <table class="table">
+                                        <tr>
+                                            <td width="100">
+                                                <div class="day-box center-block">
+                                                    <span style="font-weight: bold;font-size: 30px">{{plan.tableNumber}}</span><br/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <table class="pull-left" style="margin-left: 20px;margin-top: 10px"
+                                                       *ngFor="let val of plan.tablePlans; let i = index">
+                                                    <tr>
+                                                        <td style="width: 30px">
+                                                            <img src="assets/img/chaire.jpg" style="width: 100%"/>
+                                                        </td>
+                                                        <td style="padding-left: 20px">
+                                                            <strong>{{i+1}}</strong> - {{val.salutation}}.
+                                                            {{val.fullName}}<br/>
+                                                            <span style="color: grey;font-size: 12px">{{val.contact}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <hr/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="drawMode == true">
+                    <div class="card-content">
+                        Draw
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

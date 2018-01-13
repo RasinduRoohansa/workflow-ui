@@ -1,0 +1,30 @@
+.next-evt {
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: 10px solid #4caf50;
+    padding: 10px;
+}
+
+.label-btn-info {
+    cursor: pointer;
+}
+
+.label-btn-info:hover {
+    background-color: #00acc1 !important;
+}
+
+.number-td {
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.h-td {
+    background-color: ghostwhite;
+}
+
+.number-tbl tr td {
+    text-align: center;
+}

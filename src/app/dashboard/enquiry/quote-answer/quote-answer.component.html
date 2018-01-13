@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Question Answers</h4>
+    </div>
+    <div class="card-content table-full-width">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr *ngFor="let answer of quoteAnswer">
+                    <td style="background-color: #f4f4f3;text-align: center">
+                        <i class="material-icons">{{answer.icon}}</i>
+                    </td>
+                    <td style="padding: 20px">
+                        <span class="question-txt">{{answer.question}}</span><br/>
+                        <div *ngIf="answer.code == 'QN1'">
+                            {{answer.answer}}
+                        </div>
+                        <div *ngIf="answer.code == 'QN2'">
+                            <strong style="font-style: italic">{{answer.answerHeadline}} - </strong>
+                            {{answer.answer}}
+                        </div>
+                        <div *ngIf="answer.code == 'QN3'" style="margin-top: 10px">
+                            <span class="label label-info">{{answer.optionAnswer}}</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

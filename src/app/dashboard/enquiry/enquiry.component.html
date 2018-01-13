@@ -1,0 +1,196 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>Enquiries</h4><br/>
+                            </div>
+                            <div class="col-md-8">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <input [(ngModel)]="searchText"
+                                               name="searchfilter" type="text" class="form-control"
+                                               placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                    <button type="button" (click)="refreshEnquiry()"
+                                            class="btn btn-primary btn-round btn-just-icon">
+                                        <i class="material-icons">refresh</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <button class="btn {{status == 1 ? 'btn-primary':'btn-warning'}} btn-xs"
+                                (click)="loadEnquiryByStatus(1)">All
+                        </button>
+                        <button class="btn {{status == 2 ? 'btn-primary':'btn-warning'}} btn-xs"
+                                (click)="loadEnquiryByStatus(2)">New
+                        </button>
+                        <button class="btn {{status == 3 ? 'btn-primary':'btn-warning'}} btn-xs"
+                                (click)="loadEnquiryByStatus(3)">Allocated
+                        </button>
+                        <button class="btn {{status == 4 ? 'btn-primary':'btn-warning'}} btn-xs"
+                                (click)="loadEnquiryByStatus(4)">Confirmed
+                        </button>
+                        <button class="btn {{status == 5 ? 'btn-primary':'btn-warning'}} btn-xs"
+                                (click)="loadEnquiryByStatus(5)">Completed
+                        </button>
+                    </div>
+                    <div class="card-content table-full-width" style="min-height: 300px">
+                        <div class="loading-box" *ngIf="loading == true">
+                            <img style="width: 50px;"
+                                 src="assets/fluid-loader.gif"/>
+                        </div>
+
+                        <table *ngIf="loading == false" class="table">
+                            <tr class="{{viewEnquiry.id == enquiry.id ? 'info-highlight':''}}"
+                                *ngFor="let enquiry of enquiries">
+                                <td style="cursor: pointer" (click)="viewSelectedEnquiry(enquiry)"
+                                    (dblclick)="navigateToLog(enquiry.id)">
+                                    <div class="row">
+                                        <div class="col-md-1" style="text-align: center">
+                                            <img *ngIf="enquiry.customer.profileImage != null"
+                                                 style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                                 class="view-big"
+                                                 src="{{enquiry.customer.profileImage}}"/>
+                                            <img *ngIf="enquiry.customer.profileImage == null"
+                                                 style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                                 class="view-big"
+                                                 src="assets/img/propic.jpg">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <!--<a class="edit-btn" style="color: grey;margin-top: 10px">-->
+                                            <!--<i class="material-icons">alarm</i>-->
+                                            <!--</a>-->
+                                            <strong>
+                                                {{enquiry.customer.firstName}} {{enquiry.customer.lastName}}
+                                            </strong> -
+                                            {{enquiry.venueName}}
+
+                                            <span *ngIf="enquiry.eventType" style="font-weight: bold;color: grey"> - {{enquiry.eventType}}</span>
+                                            <br/>
+                                            {{getDescriptionShort(enquiry.description)}}<br/>
+                                            <span style="color: grey;font-size: 12px">
+                                                From <strong>{{enquiry.startDate | date:'short'}}</strong> To <strong>{{enquiry.endDate | date:'short'}}</strong>
+                                            </span>
+                                            <span style="color: grey;font-size: 12px">
+                                                <i class="material-icons" style="font-size: 12px;margin-top: 5px">date_range</i>
+                                            {{enquiry.createdDate | date:'medium'}}
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span style="float: right;margin-top: 3px"
+                                                  *ngIf="enquiry.status == 3"
+                                                  class="label label-warning">Allocated</span>
+
+                                            <span style="float: right;margin-top: 3px"
+                                                  *ngIf="enquiry.status == 4"
+                                                  class="label label-success">Booking Confirmed</span>
+
+                                            <span style="float: right;margin-top: 3px"
+                                                  *ngIf="enquiry.status == 2"
+                                                  class="label label-info">New Enquiry</span><br/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="enquiry-detail">
+                    <div class="card" *ngIf="viewEnquiry">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-12" *ngIf="viewEnquiry.processed == false">
+                                    <div>
+                                        <tooltip-content #walkthroughTooltip>
+                                            <b>Walk-Through & Create Quote</b>
+                                        </tooltip-content>
+                                        <tooltip-content #pickUpToolTip>
+                                            <b>Select location & date to create walk-through</b>
+                                        </tooltip-content>
+                                        <tooltip-content #allocateToolTip>
+                                            <b>Allocate a user to continue event</b>
+                                        </tooltip-content>
+                                    </div>
+                                    <button type="button"
+                                            (click)="viewAllocatePopup(viewEnquiry)"
+                                            [disabled]="viewEnquiry.allocated"
+                                            [tooltip]="allocateToolTip" [tooltipAnimation]="true"
+                                            class="btn btn-success btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">perm_contact_calendar</i>
+                                    </button>
+                                    <button type="button" [routerLink]="['quote-step1', viewEnquiry.id]"
+                                            *ngIf="walkthroughButton(viewEnquiry.allocatedToUsername)"
+                                            [tooltip]="pickUpToolTip" [tooltipAnimation]="true"
+                                            class="btn btn-warning btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">chrome_reader_mode</i>
+                                    </button>
+                                    <button type="button"
+                                            (click)="navigateToWalkthrough(viewEnquiry.id, viewEnquiry.fkEventType)"
+                                            *ngIf="walkthroughButton(viewEnquiry.allocatedToUsername)"
+                                            [tooltip]="walkthroughTooltip" [tooltipAnimation]="true"
+                                            class="btn btn-primary btn-round btn-just-icon pull-right">
+                                        <i class="material-icons">assignment</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center">
+                                    <img *ngIf="viewEnquiry.customer.profileImage != null"
+                                         style="cursor: pointer;width: 80px;border-radius:100%; border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                         class="view-big"
+                                         src="{{viewEnquiry.customer.profileImage}}"/>
+                                    <img *ngIf="viewEnquiry.customer.profileImage == null"
+                                         style="cursor: pointer;width: 80px;border-radius:100%;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                         class="view-big"
+                                         src="assets/img/propic.jpg"><br/><br/>
+                                    <span style="font-size: 26px">{{viewEnquiry.customer.firstName}} {{viewEnquiry.customer.lastName}}</span><br/>
+                                    <strong>{{viewEnquiry.venueName}}</strong><br/>
+                                    <i class="material-icons" style="font-size: 15px">phone</i>
+                                    <a href="tel:{{viewEnquiry.customer.mobile}}">{{viewEnquiry.customer.mobile}}</a><br/>
+
+                                    <i class="material-icons" style="font-size: 15px">email</i>
+                                    <a href="mailto:{{viewEnquiry.customer.email}}" target="_top">{{viewEnquiry.customer.email}}</a><br/><br/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: justify">
+                                    <div style="width: 100%" class="btn btn-rose">
+                                        {{viewEnquiry.startDate | date:'short'}}
+                                    </div>
+                                    <div style="width: 100%" class="btn btn-rose">
+                                        {{viewEnquiry.endDate | date:'short'}}
+                                    </div>
+                                    {{viewEnquiry.description}}
+                                </div>
+                            </div>
+                            <div *ngIf="viewEnquiry.allocated" style="width: 100%;">
+                                <hr/>
+                                <div>
+                                    <strong>{{viewEnquiry.allocatedTo}}</strong><br/>
+                                    {{viewEnquiry.allocatedDate | date:'medium'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <i class="material-icons" style="font-size: 13px">date_range</i>
+                            {{viewEnquiry.createdDate | date:'medium'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

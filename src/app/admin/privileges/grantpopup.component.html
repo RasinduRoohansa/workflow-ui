@@ -1,0 +1,64 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Grant system privileges
+                <span *ngIf="user">
+                    to {{user.firstname}} {{user.lastname}} ({{user.username}})
+                </span>
+            </h4>
+            <p class="category">
+                Select feature & click save button.
+            </p>
+        </div>
+        <div *ngIf="systemFeatures" class="modal-body">
+            <select *ngIf="!update" class="selectpicker" data-style="select-with-transition"
+                    [(ngModel)]="selectedFeature" data-live-search="true"
+                    title="Choose System Feature">
+                <option *ngFor="let feature of systemFeatures" [ngValue]="feature">
+                    {{feature.description}}
+                </option>
+            </select>
+            <input *ngIf="update" class="form-control" disabled [(ngModel)]="selectedFeature.description">
+            <br/>
+            <table width="100%" *ngIf="selectedFeature && selectedFeature.privileges == true">
+                <tr>
+                    <td>
+                        <div class="togglebutton">
+                            <label>
+                                <input [(ngModel)]="grant.read" type="checkbox">Read
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="togglebutton">
+                            <label>
+                                <input [(ngModel)]="grant.write" type="checkbox">Write
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="togglebutton">
+                            <label>
+                                <input [(ngModel)]="grant.delete" type="checkbox">Delete
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="togglebutton">
+                            <label>
+                                <input [(ngModel)]="grant.update" type="checkbox">Update
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="update" type="button" (click)="deletePrivilege()" class="btn btn-danger">DELETE</button>
+            <button type="submit" (click)="savePrivileges()" class="btn btn-primary">SAVE</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

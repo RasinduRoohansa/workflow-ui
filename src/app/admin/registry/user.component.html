@@ -1,0 +1,117 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                        <li class="active">
+                            <a href="#description-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">vpn_key</i> -->
+                                User List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#description-2" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">vpn_key</i> -->
+                                Add User
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Users</h4>
+                            </div>
+                            <div class="card-content table-full-width">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Full Name</th>
+                                            <th>E-Mail</th>
+                                            <th>Created By</th>
+                                            <th>Created Date</th>
+                                            <th>#</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let user of users">
+                                            <td>{{user.username}}</td>
+                                            <td>
+                                                {{user.firstname}} {{user.lastname}}
+                                                <span style="color: red"
+                                                      *ngIf="!user.registered">- USER IS NOT REGISTERED -</span>
+                                            </td>
+                                            <td>{{user.email}}</td>
+                                            <td>{{user.createdBy}}</td>
+                                            <td>{{user.createdDate | date:'medium'}}</td>
+                                            <td>
+                                                <button class="btn btn-danger btn-round btn-fab btn-fab-mini"
+                                                        (click)="showSwal(user)"
+                                                        *ngIf="user.activated && user.username != 'SYSTEM'">
+                                                    <i class="material-icons">delete_sweep</i>
+                                                </button>
+                                                <button disabled class="btn btn-danger btn-round btn-fab btn-fab-mini"
+                                                        *ngIf="user.username == 'SYSTEM'">
+                                                    <i class="material-icons">delete_sweep</i>
+                                                </button>
+                                                <button class="btn btn-success btn-round btn-fab btn-fab-mini"
+                                                        (click)="activateUser(user)"
+                                                        *ngIf="!user.activated && user.username != 'SYSTEM'">
+                                                    <i class="material-icons">add_box</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="description-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header card-header-icon" data-background-color="red">
+                                <i class="material-icons">add_circle_outline</i>
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">New User</h4>
+                                <form (submit)="saveUser()">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Email address</label>
+                                        <input [(ngModel)]="user.email" name="email" type="email"
+                                               class="form-control" #email="ngModel" required
+                                               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+                                    </div>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Username</label>
+                                        <input [(ngModel)]="user.username" required name="username" type="text"
+                                               class="form-control">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input [(ngModel)]="user.admin" value="{{true}}" type="checkbox"
+                                                   name="optionsCheckboxes"> Allocate admin privileges
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-fill btn-info">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

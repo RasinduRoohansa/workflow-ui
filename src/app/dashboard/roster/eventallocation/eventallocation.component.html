@@ -1,0 +1,86 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-md-12">
+                <div class="header">
+                    <h3>Add Employees to Even</h3>
+                    <p>Select employees to each catogery.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card" style="height:152px;">
+                            <div style="padding-left:30px; padding-top: 20px; ">
+                                <div *ngFor="let event of eventDetails; let i=index">
+                                    <div *ngIf="i<1">
+                                        <h5>Event Id :
+                                            <span style="font-weight:150; color:#000 ; font-size: 1.0em; ">event.id</span>
+                                        </h5>
+                                        <h5>Event Date :
+                                            <span style="font-weight:150; color:#000 ; font-size: 1.0em; ">event.createdDate</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <a class="btn btn-rose btn-round" (click)="redirect()" href="#pablo" style="background:#e53935" [tooltip]="cancelToolTip"
+                                    [tooltipAnimation]="true">
+                                    <i class="material-icons">highlight_off</i>
+                                    <div class="ripple-container"></div>
+                                </a>
+                                <div>
+                                    <tooltip-content #cancelToolTip>
+                                        <b>Cancel</b>
+                                    </tooltip-content>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="float: right">
+                                <a class="btn btn-rose btn-round" (click)="save()" href="#pablo" style="background: #43a047" [tooltip]="saveToolTip" [tooltipAnimation]="true">
+                                    <i class="material-icons">check_circle</i>
+                                    <div class="ripple-container"></div>
+                                </a>
+                                <div>
+                                    <tooltip-content #saveToolTip>
+                                        <b>Save</b>
+                                    </tooltip-content>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div *ngFor="let staff of eventDetails">
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="card card-stats">
+                                    <a class="card-header" (click)="getAllAvailableEmployees(staff.employeeTypeId)" data-background-color="orange" style="cursor: pointer">
+                                        <i class="material-icons">local_bar</i>
+                                    </a>
+                                    <div class="card-content">
+                                        <p class="category">{{staff.employeeType}}</p>
+                                        <h3 class="card-title" style="font-size: 20px">{{staff.noOfEmployee}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 30px;">
+                    <div *ngFor="let item of availableEmpoyees">
+                        <div class="col-md-2">
+                            <div class="card card-profile  {{item.selected==true ? 'selected-emp':''}}" (click)='selectEmployee(item)' style="cursor: pointer">
+                                <div class="card-avatar">
+                                    <a href="#pablo">
+                                        <img class="img" src="../../assets/img/faces/marc.jpg">
+                                    </a>
+                                </div>
+                                <div class="card-content">
+                                    <h6 class="category text-gray {{item.selected==true ? 'selected-emp':''}}">{{item.empType}}</h6>
+                                    <h4 class="card-title {{item.selected==true ? 'custom-h6':''}}">{{item.userName}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+textarea {
+    /* box-sizing: padding-box; */
+    overflow: hidden;
+    /* demo only: */
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border: 5px solid gainsboro;
+    background-color: ghostwhite;
+    box-shadow: 0px 0px 1px 1px ghostwhite;
+}
+
+.next-evt {
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: 10px solid #4caf50;
+    padding: 9px;
+    position: relative;
+    top: -20px;
+}
+
+.allocated-name {
+    font-size: 12px;
+    color: grey;
+}
+
+.status-icon {
+    text-align: right;
+    width: 50px;
+}
+
+.allocated-desc {
+    font-size: 12px;
+}
+
+.allocated-desc {
+    font-size: 12px;
+}
+
+.allocated-title {
+
+}
+
+.check-box-icon {
+    font-size: 30px;
+    color: green;
+}
+
+.msg-box-icon {
+    font-size: 30px;
+}
+
+.n-check-box-icon {
+    font-size: 30px;
+}
+
+.n-check-box-icon:hover {
+    cursor: pointer;
+    color: green;
+}
+
+.check-box-icon:hover {
+    /*cursor: pointer;*/
+}
+
+.label-cmp {
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}

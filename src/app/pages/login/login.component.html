@@ -1,0 +1,133 @@
+<div class="wrapper wrapper-full-page">
+    <nav class="navbar navbar-primary navbar-transparent navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/#/dashboard">
+                    <div class="nav-logo-txt"><img src="assets/img/logo.png"></div>
+                    <div class="nav-logo-txt-min"><img src="assets/img/logomin.png"></div>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="menu-example">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class=" active ">
+                        <a href="/pages/login">
+                            <i class="material-icons">fingerprint</i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="full-page login-page" filter-color="black" data-image="assets/img/login.jpeg">
+        <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form method="#" action="#">
+                            <div *ngIf="loading == true" class="card card-login">
+                                <div class="card-header text-center" data-background-color="rose">
+                                    <h4 class="card-title">Authenticating..</h4>
+                                    <div class="social-line">
+
+                                    </div>
+                                </div>
+                                <div class="card-content" style="text-align: center">
+                                    <img style="width: 60px;margin-left: 20px;margin-top: 50px;margin-bottom: 25px"
+                                         src="assets/fluid-loader.gif"/>
+                                    <br/>
+                                </div>
+                                <div class="footer text-center">
+                                    <button (click)="login()" type="submit"
+                                            class="btn btn-rose btn-simple btn-wd btn-lg">{{status}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="loading == false"
+                                 class="card card-login card-hidden">
+                                <div class="card-header text-center" data-background-color="rose">
+                                    <h4 class="card-title">Login</h4>
+                                    <div class="social-line">
+                                        <a (click)="socialLogin('facebook')" class="btn btn-just-icon btn-simple">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a href="#pablo" class="btn btn-just-icon btn-simple">
+                                            <i class="fa fa-google"> </i>
+                                        </a>
+                                        <a href="#eugen" class="btn btn-just-icon btn-simple">
+                                            <i class="fa fa-linkedin-square"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <p class="category text-center">
+                                    Or Be Classical
+                                </p>
+                                <div class="card-content">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" [(ngModel)]="user.username" name="username"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Password</label>
+                                            <input type="password" [(ngModel)]="user.password" name="password"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button (click)="login()" type="submit"
+                                            class="btn btn-rose btn-simple btn-wd btn-lg">Let's go
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a target="#" href="http://www.thegrandreceptions.com.au/">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a target="#" href="http://australianstrategicpartnerships.com/">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a target="#" href="http://52.39.159.71:8080/enquiry/">
+                                Enquiry
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">Copyright © 2006-
+                    {{test | date: 'yyyy'}}
+                    <a href="https://www.australianstrategicpartnerships.com">Strategic Partnership Solutions</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title">Package
+                                </h4>
+                                <p class="category">
+                                    Create packages by grouping items & labeling for suppliers.
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <input [(ngModel)]="searchText"
+                                               name="searchfilter" type="text" class="form-control"
+                                               placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                    <button (click)="createItemPackage()"
+                                            class="btn btn-success btn-round btn-just-icon">
+                                        <i class="material-icons">add_box</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content table-full-width">
+                        <div class="table-responsive">
+                            <div class="form-group label-floating">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Package</th>
+                                        <th>Supplier Details</th>
+                                        <th width="200" style="text-align: right">Cost</th>
+                                        <th>#</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let package of packages">
+                                        <td>
+                                            <a class="edit-btn" (click)="editPackage(package)">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                            {{package.packageName}}
+                                        </td>
+                                        <td>
+                                            <span *ngIf="package.supplier.supplierName">
+                                                {{package.supplier.supplierName}}
+                                            </span>
+                                            <span *ngIf="package.supplier.code"> - {{package.supplier.code}}</span>
+                                            <span style="font-weight: bold" *ngIf="package.supplier.companyName">
+                                                - {{package.supplier.companyName}}
+                                            </span>
+                                            <div style="font-size: 12px;margin-top: 5px">
+                                                {{package.supplier.streetOne}}
+                                                <span *ngIf="package.supplier.streetTwo">, {{package.supplier.streetTwo}}</span>
+                                                <span *ngIf="package.supplier.city">, {{package.supplier.city}}</span>
+                                                <span *ngIf="package.supplier.country">, {{package.supplier.country}}</span>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: right;font-size: 20px">
+                                            {{calculatePackageTotal(package) | number : '1.2-2'}}
+                                        </td>
+                                        <td>
+                                            <button (click)="navigateToSetupPage(package.id)"
+                                                    class="btn btn-warning btn-round btn-fab btn-fab-mini">
+                                                <i class="material-icons">assignment</i>
+                                            </button>
+                                            <button *ngIf="package.activated" (click)="deactivatePackage(package)"
+                                                    class="btn btn-danger btn-round btn-fab btn-fab-mini">
+                                                <i class="material-icons">delete_sweep</i>
+                                            </button>
+                                            <button *ngIf="!package.activated" (click)="activatePackage(package)"
+                                                    class="btn btn-success btn-round btn-fab btn-fab-mini">
+                                                <i class="material-icons">done</i>
+                                            </button>
+                                            <button (click)="viewImages(package)"
+                                                    class="btn btn-white btn-round btn-fab btn-fab-mini">
+                                                <i class="material-icons">add_a_photo</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

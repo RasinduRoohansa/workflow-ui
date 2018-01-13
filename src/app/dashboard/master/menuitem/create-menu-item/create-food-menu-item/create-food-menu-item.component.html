@@ -1,0 +1,132 @@
+<form (submit)="createMenuItem()">
+    <div class="modal-dialog modal-lg" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="close()">&times;</button>
+                <h4 class="modal-title">Create New Food Menu Item</h4>
+                <p class="category">
+                    Create new menu item
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group label-floating">
+                                    <select (change)="findActiveMenuItemCategory()"
+                                            class="selectpicker" data-live-search="true"
+                                            data-style="select-with-transition"
+                                            required name="itemcategory"
+                                            [(ngModel)]="menuItem.masterMainItemCategoryId"
+                                            title="Choose a menu category">
+                                        <option disabled selected value="">Choose a menu category</option>
+                                        <option *ngFor="let maiCategory of masterMainMenuItemCategory"
+                                                [ngValue]="maiCategory.id">
+                                                <span style="font-weight: bold">
+                                                    {{maiCategory.menuName}}
+                                                </span>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group label-floating">
+                                    <select class="selectpicker" data-live-search="true"
+                                            data-style="select-with-transition"
+                                            required name="itemcategory"
+                                            [(ngModel)]="menuItem.fkMasterSubItemCategoryId"
+                                            title="Choose a menu category">
+                                        <option disabled selected value="">Choose a menu category</option>
+                                        <option *ngFor="let category of masterSubMenuItemCategories"
+                                                [ngValue]="category.id">
+                                                <span style="font-weight: bold">
+                                                    {{category.categoryName}}
+                                                </span>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Item Name<span
+                                            class="star">*</span></label>
+                                    <input required [(ngModel)]="menuItem.itemName" name="itemName"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Item Code</label>
+                                    <input required [(ngModel)]="menuItem.itemCode" name="itemCode"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select class="selectpicker" data-live-search="true"
+                                        data-style="select-with-transition" style="margin-top: 22px;"
+                                        required name="itemcategory"
+                                        title="Choose a calculation type">
+                                    <option disabled selected value="">Choose a calculation type</option>
+                                    <option value="">Per Portion</option>
+                                    <option value="">Per Plate</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Item Cost<span
+                                            class="star">*</span></label>
+                                    <input required [(ngModel)]="menuItem.itemCost" name="itemCode"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Item Price<span
+                                            class="star">*</span></label>
+                                    <input required [(ngModel)]="menuItem.itemPrice" name="itemPrice"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div *ngIf="!image" class="select-img" style="height: 162px;width: 280px;margin-top: 44px;"
+                             (click)="selectImg()">
+
+                        </div>
+                        <img (click)="selectImg()" class="view-big"
+                             style="cursor: pointer;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;margin-top: 44px"
+                             *ngIf="image" [src]="image.image"
+                             width="100%">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group label-floating">
+                            <label class="control-label">item Description </label>
+                            <input required [(ngModel)]="menuItem.itemDescription" name="itemDescription"
+                                   type="text"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    {{update ? 'UPDATE ITEM':'CREATE ITEM'}}
+                </button>
+                <button type="button" class="btn btn-default" (click)="close()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</form>

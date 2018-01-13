@@ -1,0 +1,58 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title">Walk Through Template Maker
+                                </h4>
+                                <p class="category">
+                                    Questions , survey templates for walk through steps.
+                                </p>
+                                <br/>
+                            </div>
+                            <div class="col-md-4">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <input [(ngModel)]="searchText"
+                                               name="searchfilter" type="text" class="form-control"
+                                               placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                    <button (click)="createTemplate()" class="btn btn-success btn-round btn-just-icon">
+                                        <i class="material-icons">add_box</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" *ngFor="let template of templates">
+                <div class="card template-btn" (click)="loadTemplate(template.id)" style="cursor: pointer">
+                    <div class="card-header" style="text-align: center">
+                        <span *ngIf="template.name">{{template.name.toUpperCase()}}</span>
+                    </div>
+                    <div class="card-content">
+                        <!--<img *ngIf="template.eventType.thumbnail" [src]="getImage(template.eventType.thumbnail)">-->
+                        <div style="width: 100%;text-align: center;margin-top: 10px">
+                            <span class="label label-info">{{template.eventType.eventType}}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="color: grey">
+                        <i class="material-icons" style="font-size: 13px">person</i> <span style="font-size: 12px">{{template.createdByFullname}}</span><br/>
+                        <i class="material-icons" style="font-size: 13px">date_range</i> <span style="font-size: 12px">{{template.createdDate|
+                        date:'medium'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="booking">
+            <div class="card-content table-full-width">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="next-evt center-block">
+                                <span style="font-weight: bold">{{booking.startDate | date: 'MMM'}}</span><br/>
+                                <span style="font-size: 20px">{{booking.startDate | date: 'dd'}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span style="font-size: 25px">{{booking.enquiry.eventType}}<span></span></span><br/>
+                            <strong style="font-style: italic">
+                                {{booking.enquiry.customer.firstName}}
+                                {{booking.enquiry.customer.lastName}}
+                            </strong> |
+                            {{booking.enquiry.venue}} - {{booking.enquiry.venueName}}<br/>
+                            <span style="color: grey;font-size: 12px">
+                                        From <strong>{{booking.startDate | date:'short'}}</strong> To <strong>{{booking.endDate | date:'short'}}</strong>
+                                    </span>
+                        </td>
+                        <td class="hidden-xs" valign="top">
+                            <button (click)="navigateToBooking()"
+                                    class="btn btn-rose btn-round btn-just-icon pull-right">
+                                <i class="material-icons">arrow_back</i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer">
+                <span style="color: grey;font-size: 12px">{{booking.createdByFullname}} | {{booking.createdDate | date:'medium'}}</span>
+            </div>
+        </div>
+    </div>
+</div>

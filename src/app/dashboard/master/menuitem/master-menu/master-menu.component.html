@@ -1,0 +1,93 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title">Menu Creator
+                                </h4>
+                                <p class="category">
+                                    Menu Maker,
+                                </p>
+                                <br/>
+                            </div>
+                            <div class="col-md-4">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <input [(ngModel)]="searchText"
+                                               name="searchfilter" type="text" class="form-control"
+                                               placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                    <button (click)="createNewMenu()" class="btn btn-success btn-round btn-just-icon">
+                                        <i class="material-icons">add_box</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-12" *ngFor="let menu of masterMenu">
+            <div class="card card-product" data-count="0">
+                <div class="card-image animated" data-header-animation="true">
+                    <a href="#pablo">
+                        <img style="cursor: pointer;"
+                             *ngIf="menu.image" [src]="getImage(menu.image)"
+                             width="100%">
+                        <img style="cursor: pointer;"
+                             *ngIf="!menu.image" src="assets/img/noimage2.jpg"
+                             width="100%">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <div class="card-actions">
+                        <div>
+                            <tooltip-content #viewToolTip>
+                                <b>View</b>
+                            </tooltip-content>
+                            <tooltip-content #editToolTip>
+                                <b>Edit</b>
+                            </tooltip-content>
+                            <tooltip-content #deleteToolTip>
+                                <b>Delete</b>
+                            </tooltip-content>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-simple" [tooltip]="viewToolTip"
+                                [tooltipAnimation]="true">
+                            <i class="material-icons">art_track</i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-simple" [tooltip]="editToolTip"
+                                [tooltipAnimation]="true">
+                            <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-simple" [tooltip]="deleteToolTip"
+                                [tooltipAnimation]="true">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    <h4 class="card-title">
+                        <a href="#pablo">{{menu.menuName}} / {{menu.menuCode}}</a>
+                    </h4>
+                    <div class="card-description">
+                        {{menu.menuDescription}}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="price pull-left">
+                        <h4>{{menu.menuCost | number: '1.2-2'}}/Cost</h4>
+                    </div>
+                    <div class="price pull-right">
+                        <h4>{{menu.menuPrice | number: '1.2-2'}}/Price</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

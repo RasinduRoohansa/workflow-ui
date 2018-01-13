@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Event Menu/s
+                </h4>
+                <p class="category">
+                    Event planing step two. select a menu with menu items. and press next button to create quote.
+                </p>
+                <div class="pull-right">
+                    <button (click)="parentComponent.goStepThree()" type="submit" class="btn btn-primary">
+                        NEXT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="viewMasterMenu == true">
+    <div class="col-md-3 col-sm-4 col-xs-12" (click)="selectMenu(menu)" *ngFor="let menu of masterMenu">
+        <div class="card" data-count="0">
+            <div class="card-content">
+                <img style="cursor: pointer;"
+                     *ngIf="menu.image" [src]="getImage(menu.image)"
+                     width="100%">
+                <img style="cursor: pointer;"
+                     *ngIf="!menu.image" src="assets/img/noimage2.jpg"
+                     width="100%">
+                <br/>
+                <br/>
+                <h4 class="card-title" style="text-align: center">
+                    {{menu.menuName}} / {{menu.menuCode}}
+                </h4>
+                <div class="card-description" style="text-align: center">
+                    {{menu.menuDescription}}
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="price pull-left">
+                    <h4>{{menu.menuCost | number: '1.2-2'}}/Cost</h4>
+                </div>
+                <div class="price pull-right">
+                    <h4>{{menu.menuPrice | number: '1.2-2'}}/Price</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="viewMasterMenu == false">
+    <div class="col-md-3">
+        <div class="card" *ngIf="selectedMenu" data-count="0">
+            <div class="card-content">
+                <img style="cursor: pointer;"
+                     *ngIf="selectedMenu.image" [src]="getImage(selectedMenu.image)"
+                     width="100%">
+                <img style="cursor: pointer;"
+                     *ngIf="!selectedMenu.image" src="assets/img/noimage2.jpg"
+                     width="100%">
+                <br/>
+                <br/>
+                <h4 class="card-title" style="text-align: center">
+                    {{selectedMenu.menuName}} / {{selectedMenu.menuCode}}
+                </h4>
+                <div class="card-description" style="text-align: center">
+                    {{selectedMenu.menuDescription}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card card-menu" style="background-image: url('/assets/menu-bg.jpg')">
+            <div class="card-content table-full-width">
+                <!--<table class="table table-striped" *ngFor="let itemDao of masterMenuItems">-->
+                <!--<tr>-->
+                <!--<td style="text-align: center" colspan="4">-->
+                <!--<strong>{{itemDao.itemCategory.menuName}}</strong>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr *ngFor="let item of itemDao.menuItems">-->
+                <!--<td>-->
+                <!--{{item.itemName}}<br/>-->
+                <!--<span style="color: grey">{{item.itemDescription}}</span>-->
+                <!--</td>-->
+                <!--<td width="150px">-->
+                <!--<img style="cursor: pointer;"-->
+                <!--*ngIf="item.image" [src]="getImage(item.image)"-->
+                <!--width="100%">-->
+                <!--<img style="cursor: pointer;"-->
+                <!--*ngIf="!item.image" src="assets/img/noimage2.jpg"-->
+                <!--width="100%">-->
+                <!--</td>-->
+                <!--<td style="text-align: right">-->
+                <!--{{item.itemPrice| number : '1.2-2'}}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<button class="btn btn-danger btn-sm pull-right">DESELECT-->
+                <!--<div class="ripple-container"></div>-->
+                <!--</button>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</table>-->
+
+                <div style="text-align: center" *ngFor="let itemDao of masterMenuItems">
+                    <div class="menu-category-ft">
+                        <span>{{itemDao.itemCategory.categoryName}}</span>
+                    </div>
+
+                    <div class="menu-item-st" *ngFor="let item of itemDao.menuItems">
+                        {{item.itemName}}
+                    </div>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="card-title">Menu Summery</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <tooltip-content #backTomenu>
+                                <b>Go back to menu/s</b>
+                            </tooltip-content>
+                        </div>
+                        <button type="button"
+                                [tooltip]="backTomenu" [tooltipAnimation]="true"
+                                (click)="goBackToMenus()"
+                                class="btn btn-round btn-rose btn-just-icon pull-right">
+                            <i class="material-icons">arrow_back</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="menu-price">
+                    <span style="color: red">{{menuPrice| number: '1.2-2'}}</span> /Price
+                </div>
+                <br/>
+                <div style="text-align: center">
+                    <button (click)="parentComponent.goStepThree()" type="submit" class="btn btn-success">
+                        SELECT MENU
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

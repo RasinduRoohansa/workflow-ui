@@ -1,0 +1,20 @@
+.event-details{
+    background: #fff;
+    color: #999999;
+    list-style: none;
+}
+
+.event-detail-body{
+    background: #fff;
+    width: 600px;
+    height: 400px;
+}
+
+.selected-emp{
+    background-color: #fb8c00;
+    color: #ffffff;
+}
+
+.custom-h6{
+    color: #000000;
+}

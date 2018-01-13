@@ -1,0 +1,140 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-calendar">
+                    <div class="card-content" class="ps-child">
+                        <div id="fullCalendar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2" *ngIf="enquiryDetail">
+                                <img *ngIf="enquiryDetail.customer.profileImage != null"
+                                     style="cursor: pointer;width: 50px;border-radius:100%;margin-top: 5px; border: 2px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                     class="view-big"
+                                     src="{{enquiryDetail.customer.profileImage}}"/>
+                                <img *ngIf="enquiryDetail.customer.profileImage == null"
+                                     style="cursor: pointer;width: 50px;border-radius:100%;margin-top: 5px;border: 2px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                     class="view-big"
+                                     src="assets/img/propic.jpg">
+                            </div>
+                            <div class="col-md-10">
+                                <h4 class="card-title">
+                                    Walk through
+                                </h4>
+                                <div>
+                                    <tooltip-content #gobackTooltip>
+                                        <b>Go to enquiry page</b>
+                                    </tooltip-content>
+                                    <tooltip-content #changePickupLocation>
+                                        <b>Change pickup location</b>
+                                    </tooltip-content>
+                                </div>
+
+
+                                <button routerLink="/enquiry" type="button"
+                                        [tooltip]="gobackTooltip" [tooltipAnimation]="true"
+                                        class="btn btn-round btn-rose btn-just-icon pull-right">
+                                    <i class="material-icons">arrow_back</i>
+                                </button>
+                                <button *ngIf="viewMode == true" type="button" (click)="changePickup()"
+                                        [tooltip]="changePickupLocation" [tooltipAnimation]="true"
+                                        class="btn btn-round btn-warning btn-just-icon pull-right">
+                                    <i class="material-icons">mode_edit</i>
+                                </button>
+                                <p class="category" *ngIf="enquiryDetail">
+                                    <span>{{enquiryDetail.customer.firstName}} {{enquiryDetail.customer.lastName}}</span>
+                                    -
+                                    <strong>{{enquiryDetail.venueName}}</strong><br/>
+                                    <i class="material-icons" style="font-size: 15px">phone</i>
+                                    <a href="tel:{{enquiryDetail.customer.mobile}}">{{enquiryDetail.customer.mobile}}</a>
+
+                                    <i class="material-icons" style="font-size: 15px;margin-left: 10px">email</i>
+                                    <a href="mailto:{{enquiryDetail.customer.email}}" target="_top">{{enquiryDetail.customer.email}}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div *ngIf="startDate" style="width: 100%" class="btn btn-rose">
+                                    {{startDate | date:'short'}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div *ngIf="endDate" style="width: 100%" class="btn btn-rose">
+                                    {{endDate | date:'short'}}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="togglebutton">
+                                    <label>
+                                        <input type="checkbox" (change)="refreshTimePicker()"
+                                               [(ngModel)]="walkthrough.transport"> Transport Is
+                                        Required
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <input id="location-row" placeholder="Search for location"
+                                           autocorrect="off"
+                                           autocapitalize="off" [(ngModel)]="walkthrough.location.address"
+                                           spellcheck="off" type="text" class="form-control" #search
+                                           [formControl]="searchControl">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" id="time-row">
+                                    <input *ngIf="viewMode == false" type="text" id="time-pick" name="timepick"
+                                           class="form-control timepicker"
+                                           value="14:00"/>
+                                </div>
+                                <span *ngIf="viewMode == true && walkthrough.time">{{walkthrough.time | date: 'shortTime'}}<br/><br/></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <agm-map [latitude]="latitude" [longitude]="longitude"
+                                         [scrollwheel]="true" id="location-map" style="height: 200px"
+                                         [zoom]="zoom">
+                                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                                </agm-map>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label *ngIf="viewMode == false" class="control-label">Message</label>
+                                    <input *ngIf="viewMode == false" type="text" name="message" class="form-control"
+                                           [(ngModel)]="walkthrough.message"/>
+                                </div>
+                                <div *ngIf="viewMode == true" style="width: 100%;text-align: justify">
+                                    {{walkthrough.message}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button *ngIf="viewMode == false" (click)="saveReservation()" type="submit"
+                                        class="btn btn-primary pull-right">
+                                    SAVE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

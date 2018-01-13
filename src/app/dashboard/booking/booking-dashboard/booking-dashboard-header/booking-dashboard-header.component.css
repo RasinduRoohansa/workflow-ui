@@ -1,0 +1,8 @@
+.next-evt {
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: 10px solid #4caf50;
+    padding: 9px;
+}

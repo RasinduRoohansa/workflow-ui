@@ -1,0 +1,101 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">
+                                    Event Booking
+                                </h4>
+                                <p class="category">
+                                    change cart details , quote details & menu details. confirm booking.
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <tooltip-content #questionAnswer>
+                                    <b>View answered questions</b>
+                                </tooltip-content>
+                                <!--<tooltip-content #backToWalkThrough>-->
+                                <!--<b>Back to walk through</b>-->
+                                <!--</tooltip-content>-->
+                                <a scrollTo href="#question-answer"
+                                   [tooltip]="questionAnswer" [tooltipAnimation]="true"
+                                   class="btn btn-warning btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">rate_review</i>
+                                </a>
+                                <!--<button routerLink="/enquiry" type="button"-->
+                                <!--[tooltip]="backToWalkThrough" [tooltipAnimation]="true"-->
+                                <!--class="btn btn-round btn-rose btn-just-icon pull-right">-->
+                                <!--<i class="material-icons">arrow_back</i>-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div id="cart-item-panel" *ngIf="fkWalkThrough">
+                            <shopping-cart-items [fkWalkThroughId]="fkWalkThrough"></shopping-cart-items>
+                        </div>
+                        <div id="question-answer">
+                            <app-quote-answer [fkWalkThroughId]="fkWalkThrough"></app-quote-answer>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-content">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            Subtotal
+                                        </td>
+                                        <td style="text-align: right">
+                                            <strong>{{subTotal| number : '1.2-2'}}</strong><span
+                                                style="color: grey"> <strong>AUD</strong> </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax</td>
+                                        <td style="text-align: right">
+                                            <strong>{{tax| number : '1.2-2'}}</strong><span
+                                                style="color: grey"> <strong>AUD</strong> </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td style="text-align: right">
+                                            <strong style="font-size: 25px;">{{total| number :
+                                                '1.2-2'}}</strong><span
+                                                style="color: grey"> <strong>AUD</strong> </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Deposit Amount</label>
+                                                <input type="text" [(ngModel)]="booking.depositAmount" name="depositAmount"
+                                                       class="form-control">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <button style="width: 100%"
+                                        (click)="bookNow()"
+                                        class="btn btn-success">
+                                    <i class="material-icons"
+                                       style="margin-right: 10px">add_shopping_cart</i>
+                                    Confirm Booking
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

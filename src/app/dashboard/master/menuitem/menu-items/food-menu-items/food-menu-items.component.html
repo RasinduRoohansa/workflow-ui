@@ -1,0 +1,85 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title">
+                Menu Items
+                </h4>
+                <p class="category">
+                  Create FOOD &amp; BEVERAGES Menu Items
+                </p>
+              </div>
+              <div class="col-md-4">
+                <form style="margin-top: 0px;margin-bottom: 0px"
+                      class="navbar-form navbar-right" role="search">
+                  <div class="form-group form-search is-empty">
+                    <input [(ngModel)]="searchText"
+                           name="searchfilter" type="text" class="form-control"
+                           placeholder="Search">
+                  </div>
+                  <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                    <i class="material-icons">search</i>
+                  </button>
+                  <button (click)="createMenuItem()"
+                          class="btn btn-success btn-round btn-just-icon">
+                    <i class="material-icons">add_box</i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card-content table-full-width">
+            <div class="table-responsive">
+              <div class="form-group label-floating">
+                <table class="table table-hover table-striped">
+                  <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Item Category</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Item Code</th>
+                    <th class="text-right">Item Price</th>
+                    <th class="text-right">Item Cost</th>
+                    <th class="text-center">Item Description</th>
+                    <th></th>
+                  </tr>
+                  <tr *ngFor="let menu of masterMenuItems">
+                    <td>
+                      <a class="edit-btn" (click)="editPackage(package)">
+                        <i class="material-icons">edit</i>
+                      </a>
+                      {{menu.itemName}}
+                    </td>
+                    <td>{{menu.categoryName}}</td>
+                    <td style="width: 150px;">
+                      <img style="cursor: pointer;"
+                           *ngIf="menu.image" [src]="getImage(menu.image)"
+                           width="100%">
+                      <img style="cursor: pointer;"
+                           *ngIf="!menu.image" src="assets/img/noimage1.jpg"
+                           width="100%">
+                    </td>
+                    <td class="text-center">{{menu.itemCode}}</td>
+                    <td class="text-right">{{menu.itemPrice | number: '1.2-2'}}</td>
+                    <td class="text-right">{{menu.itemCost | number: '1.2-2'}}</td>
+                    <td>{{menu.itemDescription}}</td>
+                    <td>
+                      <button class="btn btn-danger btn-round btn-fab btn-fab-mini">
+                        <i class="material-icons">delete_sweep</i>
+                      </button>
+                    </td>
+                  </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

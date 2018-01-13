@@ -1,0 +1,431 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    Questions
+                                </div>
+                                <div class="col-md-4">
+                                    <form style="margin-top: 0px;margin-bottom: 0px"
+                                          class="navbar-form navbar-right" role="search">
+                                        <button (click)="createQuestion()"
+                                                class="btn btn-success btn-round btn-just-icon">
+                                            <i class="material-icons">add_box</i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </h4>
+                        <p class="category">
+                            Template question types
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <table class="table table-hover">
+                            <tr *ngFor="let q of questions">
+                                <td style="padding: 0px">
+                                    <button class="btn btn-github {{q.id == question.questionItem.id ? '':'btn-simple'}}"
+                                            (click)="findQuestionByType(q)"
+                                            style="margin: 0px;width: 100%;text-align: left">
+                                        <i class="material-icons" style="margin-right: 20px">{{q.type.icon}}</i>
+                                        {{getQuestion(q.question, q.type)}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <form (submit)="saveQuestion(question.questionItem)">
+                    <div class="card" *ngIf="question.questionItem.type != null">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="card-title">
+                                    <span *ngIf="question.questionItem.type != null">
+                                        {{question.questionItem.type.name}}
+                                    </span>
+                                    </h4>
+                                    <p class="category">
+                                        Simple question maker.
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <form style="margin-top: 0px;margin-bottom: 0px"
+                                          class="navbar-form navbar-right" role="search">
+
+                                        <button (click)="previousQuestion()"
+                                                class="btn btn-round btn-info btn-just-icon">
+                                            <i class="material-icons">navigate_before</i>
+                                        </button>
+                                        <button (click)="nextQuestion()"
+                                                class="btn btn-round btn-primary btn-just-icon">
+                                            <i class="material-icons">navigate_next</i>
+                                        </button>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div *ngIf="question.questionItem.type != null">
+                                <!--short answer-->
+                                <div *ngIf="question.questionItem.type.code == 'QN1'" id="short-answer">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title
+                                            ( Untitled Question ).</label>
+                                        <input required name="questiontitle" type="text"
+                                               [(ngModel)]="question.questionItem.question"
+                                               class="form-control">
+                                    </div>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Short answer text</label>
+                                        <input name="shortanswer" type="text" disabled class="form-control">
+                                    </div>
+                                </div>
+
+                                <!--paragraph-->
+                                <div *ngIf="question.questionItem.type.code == 'QN2'" id="paragraph">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title
+                                            ( Untitled Question ).</label>
+                                        <input required name="titleofquestion" type="text"
+                                               [(ngModel)]="question.questionItem.question"
+                                               class="form-control">
+                                    </div>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Paragraph topic</label>
+                                        <input name="untitledquestion" type="text" disabled class="form-control">
+                                    </div>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Paragraph answer text</label>
+                                        <input name="paraanaswer" type="text" disabled class="form-control">
+                                    </div>
+                                </div>
+
+                                <!--Single Choice-->
+                                <div *ngIf="question.questionItem.type.code == 'QN3'" id="single-choice">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title
+                                            ( Untitled Question ).</label>
+                                        <input required [(ngModel)]="question.questionItem.question" type="text"
+                                               name="question3"
+                                               class="form-control">
+                                    </div>
+                                    <div>
+                                        <table width="100%">
+                                            <tr *ngFor="let option of question.questionItem.optionList; let i = index"
+                                                [attr.data-index]="i">
+                                                <td class="padding-top-20">
+                                                    <label class="pull-right">
+                                                        <i class="material-icons">radio_button_unchecked</i>
+                                                    </label>
+                                                </td>
+                                                <td class="padding-left-20">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">{{option.name}}</label>
+                                                        <input required name="optiontext{{i}}" type="text"
+                                                               [(ngModel)]="option.optionText"
+                                                               class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td class="padding-top-20">
+                                                    <label (click)="removeOption(i, question.questionItem)">
+                                                        <i style="cursor: pointer" class="material-icons">cancel</i>
+                                                    </label>
+                                                    <label *ngIf="option.fkSubQuestionItem == null"
+                                                           style="color: #4caf50;cursor: pointer"
+                                                           (click)="tagQuestion(option)">
+                                                        <i class="material-icons">add_circle</i>
+                                                    </label>
+                                                    <label *ngIf="option.fkSubQuestionItem != null"
+                                                           (click)="deactivateSubQuestionByOption(option)"
+                                                           style="color: #e52d27;cursor: pointer">
+                                                        <i class="material-icons">remove_circle</i>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="padding-top-10">
+                                                    <label class="pull-right">
+                                                        <i class="material-icons">radio_button_checked</i>
+                                                    </label>
+                                                </td>
+                                                <td class="padding-left-10">
+                                                    <a (click)="addOptionButton(question.questionItem)"
+                                                       class="btn btn-rose btn-xs">
+                                                        <i class="material-icons">add_box</i> Add Option
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                    </div>
+                                </div>
+
+                                <!--Multiple Choice-->
+                                <div *ngIf="question.questionItem.type.code == 'QN4'" id="multiple-choice">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title
+                                            ( Untitled Question ).</label>
+                                        <input required [(ngModel)]="question.questionItem.question" type="text"
+                                               name="question3"
+                                               class="form-control">
+                                    </div>
+                                    <div>
+                                        <table width="100%">
+                                            <tr *ngFor="let option of optionList; let i = index" [attr.data-index]="i">
+                                                <td class="padding-top-20">
+                                                    <label class="pull-right">
+                                                        <i class="material-icons">check_box_outline_blank</i>
+                                                    </label>
+                                                </td>
+                                                <td class="padding-left-20">
+                                                    <div class="form-group label-floating">
+                                                        <label class="control-label">{{option.name}}</label>
+                                                        <input required name="optiontext{{i}}" type="text"
+                                                               [(ngModel)]="option.optionText"
+                                                               class="form-control">
+                                                    </div>
+                                                </td>
+                                                <td class="padding-top-20">
+
+                                                    <label class="label-rose" (click)="removeCheck(i)">
+                                                        <i style="cursor: pointer" class="material-icons">cancel</i>
+                                                    </label>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="padding-top-10">
+                                                    <label class="pull-right">
+                                                        <i class="material-icons">check_box</i>
+                                                    </label>
+                                                </td>
+                                                <td class="padding-left-10">
+                                                    <a (click)="addCheckButton()"
+                                                       class="btn btn-rose btn-xs">
+                                                        <i class="material-icons">add_box</i> Add Check
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br/>
+                                    </div>
+                                </div>
+
+                                <!--drop down-->
+                                <div *ngIf="question.questionItem.type.code == 'QN5'" id="dropdown">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title ( Untitled Question
+                                            ).</label>
+                                        <input required name="untitledquestion" type="text"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+                                <!--package-->
+                                <div *ngIf="question.questionItem.type.code == 'QN6'" id="package-answer">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Type here question title
+                                            ( Untitled Question ).</label>
+                                        <input required name="questiontitle" type="text"
+                                               [(ngModel)]="question.questionItem.question"
+                                               class="form-control">
+                                    </div>
+                                    <div style="margin-top: 10px">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div style="box-shadow: 0px 1px 1px 1px gainsboro">
+                                                    <img src="assets/img/pack.jpg" height="172" width="100%"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div style="box-shadow: 0px 1px 1px 1px gainsboro">
+                                                    <img src="assets/img/pack.jpg" height="172" width="100%"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div style="box-shadow: 0px 1px 1px 1px gainsboro">
+                                                    <img src="assets/img/pack.jpg" height="172" width="100%"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="pull-right" style="margin-bottom: 10px">
+                                <button type="button" class="btn btn-danger btn-just-icon">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                                <button (click)="findQuestionByQuestionId(this.question.questionItem)" type="button"
+                                        class="btn btn-info btn-just-icon">
+                                    <i class="material-icons">refresh</i>
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    SAVE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngFor="let qn of subQuestions">
+                    <form (submit)="saveQuestion(qn)">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="card-title">
+                                    <span *ngIf="qn.type != null">
+                                        <span *ngIf="question.questionItem.type.code == 'QN3'">
+                                            <span *ngIf="qn.subQuestionName">
+                                                if <strong>{{qn.subQuestionName}} - </strong>
+                                            </span>
+                                        </span>
+                                        {{qn.type.name}}
+                                    </span>
+                                        </h4>
+                                        <p class="category">
+                                            Simple sub question maker.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div *ngIf="qn.type">
+                                    <!--short answer-->
+                                    <div *ngIf="qn.type.code == 'QN1'" id="short-answer1">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Type here question title
+                                                ( Untitled Question ).</label>
+                                            <input required name="questiontitle" type="text"
+                                                   [(ngModel)]="qn.question"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Short answer text</label>
+                                            <input name="shortanswer" type="text" disabled class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--paragraph-->
+                                    <div *ngIf="qn.type.code == 'QN2'" id="paragraph1">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Type here question title
+                                                ( Untitled Question ).</label>
+                                            <input required name="titleofquestion" type="text"
+                                                   [(ngModel)]="qn.question"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Paragraph topic</label>
+                                            <input name="untitledquestion" type="text" disabled class="form-control">
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Paragraph answer text</label>
+                                            <input name="paraanaswer" type="text" disabled class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--Single Choice-->
+                                    <div *ngIf="qn.type.code == 'QN3'" id="single-choice1">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Type here question title
+                                                ( Untitled Question ).</label>
+                                            <input required [(ngModel)]="qn.question" type="text"
+                                                   name="question3"
+                                                   class="form-control">
+                                        </div>
+                                        <div>
+                                            <table width="100%">
+                                                <tr *ngFor="let option of qn.optionList; let i = index"
+                                                    [attr.data-index]="i">
+                                                    <td class="padding-top-20">
+                                                        <label class="pull-right">
+                                                            <i class="material-icons">radio_button_unchecked</i>
+                                                        </label>
+                                                    </td>
+                                                    <td class="padding-left-20">
+                                                        <div class="form-group label-floating">
+                                                            <label class="control-label">{{option.name}}</label>
+                                                            <input required name="optiontext{{i}}" type="text"
+                                                                   [(ngModel)]="option.optionText"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </td>
+                                                    <td class="padding-top-20">
+                                                        <label (click)="removeOption(i, qn)">
+                                                            <i style="cursor: pointer" class="material-icons">cancel</i>
+                                                        </label>
+                                                        <!--<label *ngIf="option.fkSubQuestionItem == null && qn.main == true"-->
+                                                        <!--style="color: #4caf50;cursor: pointer"-->
+                                                        <!--(click)="tagQuestion(option)">-->
+                                                        <!--<i class="material-icons">add_circle</i>-->
+                                                        <!--</label>-->
+                                                        <!--<label *ngIf="option.fkSubQuestionItem != null && qn.main == true"-->
+                                                        <!--(click)="deactivateSubQuestionByOption(option)"-->
+                                                        <!--style="color: #e52d27;cursor: pointer">-->
+                                                        <!--<i class="material-icons">remove_circle</i>-->
+                                                        <!--</label>-->
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="padding-top-10">
+                                                        <label class="pull-right">
+                                                            <i class="material-icons">radio_button_checked</i>
+                                                        </label>
+                                                    </td>
+                                                    <td class="padding-left-10">
+                                                        <a (click)="addOptionButton(qn)"
+                                                           class="btn btn-rose btn-xs">
+                                                            <i class="material-icons">add_box</i> Add Option
+                                                        </a>
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <br/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right" style="margin-bottom: 10px">
+                                    <button type="button" class="btn btn-danger btn-just-icon">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                    <button (click)="findQuestionByQuestionId(qn)" type="button"
+                                            class="btn btn-info btn-just-icon">
+                                        <i class="material-icons">refresh</i>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        SAVE
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

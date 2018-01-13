@@ -1,0 +1,159 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                        <li class="active">
+                            <a href="#description-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">vpn_key</i> -->
+                                Roles Privilege
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#schedule-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">face</i> -->
+                                Users Privilege
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tasks-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">add_circle_outline</i> -->
+                                Create Role
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Select user role</h4>
+                                <p class="category">
+                                    Created roles are listed below.
+                                </p>
+                            </div>
+                            <div class="card-content">
+
+                                <div class="form-group label-floating">
+                                    <!--<label class="control-label">Username</label>-->
+                                    <select class="selectpicker" data-style="select-with-transition"
+                                            [(ngModel)]="selectedRoleToAssign"
+                                            (change)="findMenus()"
+                                            title="Choose Role">
+                                        <option selected [ngValue]="null">Choose Role</option>
+                                        <option *ngFor="let role of rolesToAssign" [ngValue]="role.id">
+                                            {{role.role}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" *ngIf="selectedRoleToAssign != null">
+                            <div class="card-header">
+                                <h4 class="card-title"> Assign privileges to selected role</h4>
+                                <p class="category">
+                                    The permissions to perform certain operations are assigned to specific roles.
+                                </p>
+                            </div>
+                            <div class="card-content">
+                                <div *ngFor="let menu of menus" style="border-top: 1px solid gainsboro">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" disabled value="{{true}}"
+                                                   *ngIf="menu.subMenu.length != 0"
+                                                   (change)="assignToRole(menu)">
+                                            <input [(ngModel)]="menu.selected" value="{{true}}" type="checkbox"
+                                                   *ngIf="menu.subMenu.length == 0"
+                                                   (change)="assignToRole(menu)"
+                                                   name="optionsRadios">
+                                            {{menu.menu}}
+                                        </label>
+                                    </div>
+                                    <div style="margin-left: 50px" class="checkbox"
+                                         *ngFor="let sub of menu.subMenu">
+                                        <label>
+                                            <input [(ngModel)]="sub.selected" value="{{true}}" type="checkbox"
+                                                   (change)="assignSubmenuToRole(sub)"
+                                                   name="optionsRadios"> {{sub.menu}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="schedule-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Assign roles to users</h4>
+                                <p class="category">
+                                    Access permissions specify the users
+                                </p>
+                            </div>
+                            <div class="card-content">
+                                <div class="form-group label-floating">
+                                    <select class="selectpicker" data-style="select-with-transition"
+                                            (change)="findUserRoleMapper()"
+                                            [(ngModel)]="selectedUser"
+                                            title="Choose User">
+                                        <option selected [ngValue]="null">Choose User</option>
+                                        <option *ngFor="let user of userList" [ngValue]="user.id">
+                                            {{user.firstname}} {{user.lastname}} ({{user.username}})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="selectedUser != null">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="checkbox" *ngFor="let role of roleList">
+                                    <label>
+                                        <input [(ngModel)]="role.checked" value="{{true}}" type="checkbox"
+                                               (change)="assignRoleToUser(role)"
+                                               name="optionsRadios"> {{role.role}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tasks-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Create new roles</h4>
+                                <p class="category">
+                                    adds a new role to system
+                                </p>
+                            </div>
+                            <div class="card-content">
+
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Role Name</label>
+                                    <input [(ngModel)]="role.role" name="role" type="text" class="form-control">
+                                </div>
+                                <button (click)="saveRole()" type="submit" class="btn btn-fill btn-info">SAVE
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="orange">
+                        <i class="material-icons">alarm</i>
+                    </div>
+                    <div class="card-content table-full-width">
+                        <h4 class="card-title">Event Logger</h4>
+                        <div class="table-responsive" *ngFor="let logdao of activityLogs">
+                            <table class="table-log table">
+                                <tr class="top-tr-c">
+                                    <td></td>
+                                    <td width="70px">
+                                        <div class="day-box {{logdao.today == true ? 'today-box':''}}">
+                                            <span style="font-weight: bold">{{logdao.date | date: 'MMM'}}</span><br/>
+                                            <span style="font-size: 20px">{{logdao.date | date: 'dd'}}</span>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let log of logdao.logs">
+                                    <td class="log-{{log.logType}}"
+                                        style="text-align: center;background-color: #f4f4f3;width: 100px">
+                                        <i *ngIf="log.logType == 'create'" class="material-icons">create</i>
+                                        <i *ngIf="log.logType == 'view'" class="material-icons">pageview</i>
+                                        <i *ngIf="log.logType == 'edit'" class="material-icons">update</i>
+                                        <i *ngIf="log.logType == 'delete'" class="material-icons">delete</i>
+                                    </td>
+                                    <td></td>
+                                    <td style="padding-left: 20px">
+                                        {{log.description}}<br/>
+                                        <span style="margin-top: 3px;width: 100px;padding: 2px;padding-left: 10px;padding-right: 10px"
+                                              class="label label-success log-bg-{{log.logType}}">{{log.logType}}</span>
+                                        <a class="created-date-c">
+                                            {{log.createdByFullname}} | {{log.createdDate | date:'medium'}}
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

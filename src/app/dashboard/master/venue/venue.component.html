@@ -1,0 +1,304 @@
+<style type="text/css">
+    .venue-head {
+        font-size: 30px;
+    }
+
+    .venue-address {
+        font-size: 15px;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="card-title">Venues and Spaces/Rooms
+                                        </h4>
+                                        <p class="category">
+                                            When you add Venues and Spaces/Rooms to this page, you can assign them to
+                                            Events as
+                                            well as track on the Calendar what Spaces/Rooms you have booked or placed on
+                                            hold.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form style="margin-top: 0px;margin-bottom: 0px"
+                                              class="navbar-form navbar-right" role="search">
+                                            <div class="form-group form-search is-empty">
+                                                <input type="text" (keyup)="filterItem()" [(ngModel)]="searchText"
+                                                       class="form-control" name="searchText"
+                                                       placeholder="Search">
+                                            </div>
+                                            <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                                <i class="material-icons">search</i>
+                                            </button>
+                                            <button type="button" (click)="findAllVenue()"
+                                                    class="btn btn-primary btn-round btn-just-icon">
+                                                <i class="material-icons">refresh</i>
+                                            </button>
+                                            <span role="tablist">
+                                                    <a href="#description-2" role="tab" data-toggle="tab"
+                                                       class="btn btn-success btn-round btn-just-icon">
+                                                        <!--<i class="material-icons md-18">vpn_key</i> -->
+                                                        <i class="material-icons">add_box</i>
+                                                    </a>
+                                            </span>
+                                        </form>
+                                    </div>
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+
+                        <div class="card" *ngFor="let venue of venueList">
+                            <div class="card-content" style="padding: 30px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="venue-head" style="margin-top: 10px">{{venue.venueName}}</div>
+
+                                        <div *ngIf="venue.description" style="text-align: justify;width: 100%">
+                                            <br/>{{venue.description}}
+                                        </div>
+                                        <div class="venue-address"><i class="material-icons"
+                                                                      style="font-size: 13px">location_on</i>
+                                            {{venue.streetOne}}
+                                            <span *ngIf="venue.streetTwo">, {{venue.streetTwo}}</span>
+                                            <span *ngIf="venue.city">
+                                                , {{venue.city}}
+                                            </span>
+                                            <span *ngIf="venue.country">
+                                                , {{venue.country}}
+                                            </span>
+                                            <span *ngIf="venue.state">| {{venue.state}}</span>
+                                        </div>
+                                        <span *ngIf="venue.web" style="margin-right: 30px">
+                                        <i class="material-icons" style="font-size: 13px">link</i>
+                                        <a target="#" href="http://{{venue.web}}">{{venue.web}}</a>
+                                        </span>
+                                        <span *ngIf="venue.email" style="margin-right: 30px">
+                                            <i class="material-icons" style="font-size: 13px">email</i>
+                                            <a href="mailto:{{venue.email}}" target="_top">{{venue.email}}</a>
+                                        </span>
+                                        <span *ngIf="venue.phone">
+                                            <i class="material-icons" style="font-size: 13px">settings_phone</i>
+                                            <a href="tel:{{venue.phone}}">{{venue.phone}}</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <div class="form-group label-floating">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="230px">SPACE/ROOM</th>
+                                                        <th width="100px">PAX</th>
+                                                        <th>IMAGE</th>
+                                                        <th>DESCRIPTION</th>
+                                                        <th width="150">
+                                                            <button (click)="addSpaceRoom(venue)"
+                                                                    class="btn btn-success btn-round btn-fab btn-fab-mini">
+                                                                <i class="material-icons">add_box</i>
+                                                            </button>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr *ngFor="let space of venue.spaces">
+                                                        <td>
+                                                            <a (click)="updateSpaceRoom(venue,space)" class="edit-btn">
+                                                                <i class="material-icons">edit</i>
+                                                            </a>{{space.name}}
+                                                        </td>
+                                                        <td>
+                                                            <span style="font-size: 18px">
+                                                                {{space.min}}-{{space.max}}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <img style="cursor: pointer;transform: scale(1.4);width: 100px"
+                                                                 *ngIf="space.thumbnail"
+                                                                 [src]="getImage(space.thumbnail)"
+                                                                 width="100%">
+                                                            <img style="cursor: pointer;transform: scale(1.4);width: 100px"
+                                                                 *ngIf="!space.thumbnail" src="assets/img/noimage2.jpg"
+                                                                 width="100%">
+                                                        </td>
+                                                        <td style="padding-left: 20px">
+                                                            {{getDescriptionShort(space.description)}}
+                                                            <br/>
+                                                            <span style="font-size: 12px;color: grey">
+                                                        {{space.createdByFullname}} |
+                                                    {{space.createdDate | date:'medium'}}
+                                                    </span>
+                                                        </td>
+                                                        <td>
+                                                            <button *ngIf="space.activated"
+                                                                    (click)="deactivateVenueSpace(space)"
+                                                                    class="btn btn-danger btn-round btn-fab btn-fab-mini">
+                                                                <i class="material-icons">delete_sweep</i>
+                                                            </button>
+                                                            <button *ngIf="!space.activated"
+                                                                    (click)="activateVenueSpace(space)"
+                                                                    class="btn btn-success btn-round btn-fab btn-fab-mini">
+                                                                <i class="material-icons">done</i>
+                                                            </button>
+                                                            <button (click)="viewImages(space,venue)"
+                                                                    class="btn btn-white btn-round btn-fab btn-fab-mini">
+                                                                <i class="material-icons">add_a_photo</i>
+                                                            </button>
+                                                            <button (click)="viewMore(space,venue)"
+                                                                    class="btn btn-white btn-round btn-fab btn-fab-mini">
+                                                                <i class="material-icons">assignment</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer" style="color: grey">
+                                <i class="material-icons" style="font-size: 13px">person</i> {{venue.createdByFullname}}
+                                | <i class="material-icons" style="font-size: 13px">date_range</i> {{venue.createdDate|
+                                date:'medium'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="description-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Add New Venue
+                                    <form style="margin-top: 0px;margin-bottom: 0px"
+                                          class="navbar-form navbar-right" role="search">
+                                        <span role="tablist" class="pull-right">
+                                            <a href="#description-1" role="tab" data-toggle="tab"
+                                               class="btn btn-round btn-rose btn-just-icon">
+                                                <i class="material-icons">arrow_back</i>
+                                            </a>
+                                        </span>
+                                    </form>
+                                </h4>
+                            </div>
+                            <div class="card-content">
+
+                                <form (submit)="saveVenue();myNgForm.reset();" #myNgForm="ngForm"
+                                      class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Venue name <span
+                                                        class="star">*</span></label>
+                                                <input required [(ngModel)]="venue.venueName" name="venueName"
+                                                       type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Street 1 <span
+                                                        class="star">*</span></label>
+                                                <input required [(ngModel)]="venue.streetOne" name="streetOne"
+                                                       type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Street 2</label>
+                                                <input [(ngModel)]="venue.streetTwo" name="streetTwo" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Country</label>
+                                                <input [(ngModel)]="venue.country" name="country" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">City <span class="star">*</span></label>
+                                                <input required [(ngModel)]="venue.city" name="city" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">State</label>
+                                                <input [(ngModel)]="venue.state" name="state" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"> <i class="material-icons"
+                                                                                 style="font-size: 13px">link</i>
+                                                    Location
+                                                    Website</label>
+                                                <input [(ngModel)]="venue.web" name="web" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Location Email <span class="star">*</span></label>
+                                                <input [(ngModel)]="venue.email" name="email" type="email"
+                                                       class="form-control" #email="ngModel" required
+                                                       pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Location Phone</label>
+                                                <input [(ngModel)]="venue.phone" name="phone" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Description</label>
+                                                <input [(ngModel)]="venue.description" name="phone" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary btn-fill">
+                                                SAVE
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

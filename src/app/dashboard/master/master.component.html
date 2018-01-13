@@ -1,0 +1,235 @@
+<style type="text/css">
+    .mi-size {
+        font-size: 30px;
+    }
+</style>
+
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">assignment</i><br/>
+                        <h4 class="card-title">Event Type Master</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Customize & add event type to the system and select an images for related event types.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('eventTypeMaster')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">room</i><br/>
+                        <h4 class="card-title">Venue</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Add venues, spaces/rooms & upload multiple images , facilities for each venues.<br/>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('venueMaster')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">extension</i><br/>
+                        <h4 class="card-title">Item Category</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Add Itinerary Category & Items for each categories<br/>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('itinerary')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">contacts</i><br/>
+                        <h4 class="card-title">Suppliers</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Add suppliers and customize supplier packages for each suppliers.<br/>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('supplier')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">question_answer</i><br/>
+                        <h4 class="card-title">Question Maker</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create your own questions , survey templates for walk through steps.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('question-maker')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">group_work</i><br/>
+                        <h4 class="card-title">Package</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create packages by grouping items & labeling for suppliers.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('package')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">directions_car</i><br/>
+                        <h4 class="card-title">Driver</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create packages by grouping items & labeling for suppliers.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('driver')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">face</i><br/>
+                        <h4 class="card-title">Employee</h4>
+                        <p class="category sub-category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create packages by grouping items & labeling for suppliers.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('employee')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">assignment</i><br/>
+                        <h4 class="card-title">Menu Item/s</h4>
+                        <p class="category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create Menu Items
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('menu-items')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">assignment</i><br/>
+                        <h4 class="card-title">Create Menu</h4>
+                        <p class="category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create Menu Items
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('create-menu')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <i class="material-icons mi-size">assignment</i><br/>
+                        <h4 class="card-title">Check List</h4>
+                        <p class="category">
+                            Last Update 2017-06-10
+                        </p>
+                    </div>
+                    <div class="card-content text-center master-content">
+                        Create check list template. this will show in the booking dashboard.
+                    </div>
+                    <div class="card-footer text-center">
+                        <button (click)="navigateToMaster('check-list')" class="btn btn-warning btn-sm">Open
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

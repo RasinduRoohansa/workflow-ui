@@ -1,0 +1,177 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Suppliers
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form style="margin-top: 0px;margin-bottom: 0px" class="navbar-form navbar-right" role="search">
+                                                <div class="form-group form-search is-empty">
+                                                    <input (keyup)="filterItem()" [(ngModel)]="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                                                </div>
+                                                <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                                <button (click)="findAllSupplier()" type="button" class="btn btn-primary btn-round btn-just-icon">
+                                                    <i class="material-icons">refresh</i>
+                                                </button>
+                                                <span role="tablist">
+                                                    <a href="#description-2" role="tab" data-toggle="tab" class="btn btn-success btn-round btn-just-icon">
+                                                        <i class="material-icons">add_box</i>
+                                                    </a>
+                                                </span>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </h4>
+                                <p class="category">
+
+                                </p>
+                            </div>
+                            <div class="card-content table-responsive">
+                                <table class="table">
+                                    <tr *ngFor="let supplier of suppliers">
+                                        <td>
+                                            <strong>
+                                                {{supplier.supplierName}}
+                                                <span *ngIf="supplier.companyName"> - {{supplier.companyName}}</span>
+                                            </strong> | {{supplier.streetOne}}
+                                            <span *ngIf="supplier.streetTwo">, {{supplier.streetTwo}}</span>
+                                            <span *ngIf="supplier.city">, {{supplier.city}}</span>
+                                            <span *ngIf="supplier.country">| {{supplier.country}}</span>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>
+                                                        <i class="material-icons" style="font-size: 15px;">call</i>
+                                                        <a href="tel:{{supplier.telephoneOne}}"> {{supplier.telephoneOne}}</a>
+                                                    </span>
+                                                    <span *ngIf="supplier.telephoneTwo"> ,
+                                                        <i class="material-icons" style="font-size: 15px;">call</i>
+                                                        <a href="tel:{{supplier.telephoneTwo}}"> {{supplier.telephoneTwo}}</a>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span style="float: right" class="label label-info">{{supplier.code}}</span>
+                                                    <span *ngIf="supplier.email">
+                                                        <i class="material-icons" style="font-size: 15px;">email</i>
+                                                        <a href="mailto:{{supplier.email}}" target="_top">{{supplier.email}}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span style="font-size: 12px;color: grey">{{supplier.createdByFullname}} | {{supplier.createdDate | date:'medium'}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="description-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Add Supplier
+                            <form style="margin-top: 0px;margin-bottom: 0px" class="navbar-form navbar-right" role="search">
+                                <span role="tablist" class="pull-right">
+                                    <a href="#description-1" role="tab" data-toggle="tab" class="btn btn-rose btn-round btn-just-icon">
+                                        <i class="material-icons">arrow_back</i>
+                                    </a>
+                                </span>
+                            </form>
+                        </h4>
+                    </div>
+                    <div class="card-content">
+                        <br/>
+                        <form (submit)="saveSupplier()">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Supplier Name</label>
+                                        <input required [(ngModel)]="supplier.supplierName" type="text" name="supplierName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Code</label>
+                                        <input [(ngModel)]="supplier.code" type="text" name="code" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Company Name</label>
+                                        <input [(ngModel)]="supplier.companyName" type="text" name="companyName" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Street One</label>
+                                        <input required [(ngModel)]="supplier.streetOne" type="text" name="streetOne" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Street Two</label>
+                                        <input [(ngModel)]="supplier.streetTwo" type="text" name="streetTwo" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">City</label>
+                                        <input [(ngModel)]="supplier.city" type="text" name="city" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Country</label>
+                                        <input [(ngModel)]="supplier.country" type="text" name="country" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Telephone 01</label>
+                                        <input required [(ngModel)]="supplier.telephoneOne" type="text" name="telephoneOne" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Telephone 02</label>
+                                        <input [(ngModel)]="supplier.telephoneTwo" type="text" name="telephoneTwo" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Fax</label>
+                                        <input [(ngModel)]="supplier.fax" type="text" name="fax" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">E-mail</label>
+                                        <input [(ngModel)]="supplier.email" type="text" name="email" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-fill btn-info">Add
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

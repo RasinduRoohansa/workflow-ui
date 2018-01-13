@@ -1,0 +1,32 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Enquiry Allocation
+            </h4>
+            <p class="category">
+                Select user & click allocate button.
+                <span style="float: right" *ngIf="enquiry"
+                      class="label label-info">{{enquiry.eventType}}</span>
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <select class="selectpicker"
+                            [(ngModel)]="enquiryAllocation.fkUser"
+                            data-style="select-with-transition" title="Choose User"
+                            data-size="7">
+                        <option *ngFor="let user of users" [ngValue]="user.id">
+                            {{user.firstname}} {{user.lastname}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" (click)="allocateEnquiry()" class="btn btn-primary">ALLOCATE</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

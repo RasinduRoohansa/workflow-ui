@@ -1,0 +1,190 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <app-booking-dashboard-header [fkBooking]="fkBooking"></app-booking-dashboard-header>
+        <div class="row">
+            <div class="col-md-3" (click)="navigateToItinerary()">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">view_agenda</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Event Agenda</span><br/>
+                                        <span class="label label-warning">5 Itineraries Added</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" (click)="navigateToCheckList()">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">bookmark_border</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Check Lists</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-success">Checked All</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" (click)="navigateToTablePlan()">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">open_with</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Table Plan</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-warning">3 Tables</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">assignment</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Food Menu</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-info">1 Menu Selected</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">shopping_cart</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Packages</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-info">3 Packages</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">attach_money</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Payments</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-warning">Not Settled</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card box-move">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">insert_drive_file</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Vouchers</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-info">3 Vouchers generated</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card box-move" (click)="navigateToLog(booking.enquiry.id)">
+                    <div class="card-content table-full-width">
+                        <table class="table">
+                            <tr>
+                                <td class="item-icon">
+                                    <i class="material-icons">assignment_ind</i>
+                                </td>
+                                <td>
+                                    <div class="card-desc">
+                                        <span class="item-desc">Event Log</span><br/>
+                                        <span style="margin-top: 3px"
+                                              class="label label-info">Updated</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <span class="item-update">Last Update : 1/10/2018, 10:51 AM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

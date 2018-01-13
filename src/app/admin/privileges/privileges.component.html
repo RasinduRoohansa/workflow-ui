@@ -1,0 +1,104 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                        <li class="active">
+                            <a href="#description-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">vpn_key</i> -->
+                                Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#description-2" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">face</i> -->
+                                Roles
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h4 class="card-title">Grant system privileges to the users</h4>
+                                        <p class="category">
+                                            A privilege allows a user to perform an action.
+                                            Examples of various privileges include the ability to create a venue in a
+                                            venue master, or to read or delete a venue or have read or write permission.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button *ngIf="selectedUser" (click)="viewGrantPopup()"
+                                                class="btn btn-success btn-round btn-fab btn-fab-mini pull-right">
+                                            <i class="material-icons">add_box</i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <select class="selectpicker" data-style="select-with-transition"
+                                        [(ngModel)]="selectedUser" data-live-search="true"
+                                        (change)="findPrivillegesByUserId()"
+                                        title="Choose User">
+                                    <option *ngFor="let user of userList" [ngValue]="user">
+                                        {{user.firstname}} {{user.lastname}} ({{user.username}})
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th width="100">Code</th>
+                                            <th>Description</th>
+                                            <th width="300">Privileges</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let alc of allocatedFeatures">
+                                            <td>
+                                                <a (click)="editGrantPopup(alc)" class="edit-btn">
+                                                    <i class="material-icons">edit</i>
+                                                </a><strong>{{alc.code}}</strong>
+                                            </td>
+                                            <td>{{alc.description}}</td>
+                                            <td>
+                                                <div *ngIf="alc.privileges == true">
+                                                    <span *ngIf="alc.read" class="label label-info">Read</span>
+                                                    <span *ngIf="alc.write" class="label label-success">Write</span>
+                                                    <span *ngIf="alc.delete"
+                                                          class="label label-danger">Delete</span>
+                                                    <span *ngIf="alc.update"
+                                                          class="label label-warning">Update</span>
+                                                </div>
+                                                <div *ngIf="alc.privileges == false">
+                                                    <span class="label label-default">Allowed</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="description-2">
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

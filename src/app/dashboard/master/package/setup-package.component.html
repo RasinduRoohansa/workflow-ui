@@ -1,0 +1,292 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title">
+                                    <span *ngIf="packageById">
+                                        {{packageById.packageName}} -
+                                    </span> Setup & Update Package
+                                </h4>
+                                <p class="category">
+                                    Manage package items for selected supplier package.
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <button (click)="goToPackageMaster()"
+                                            class="btn btn-round btn-rose btn-just-icon">
+                                        <i class="material-icons">arrow_back</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row" *ngIf="packageById">
+                            <div class="col-md-12">
+                                Supplier Details :
+
+                                <span style="font-weight: bold" *ngIf="packageById.supplier.supplierName">
+                                    {{packageById.supplier.supplierName}}
+                                </span>
+                                <span style="font-weight: bold" *ngIf="packageById.supplier.companyName">
+                                     - {{packageById.supplier.companyName}}
+                                </span>
+                                <span style="font-weight: bold" *ngIf="packageById.supplier.code"> - {{packageById.supplier.code}}</span>
+
+                                {{packageById.supplier.streetOne}}
+                                <span *ngIf="packageById.supplier.streetTwo">, {{packageById.supplier.streetTwo}}</span>
+                                <span *ngIf="packageById.supplier.city">, {{packageById.supplier.city}}</span>
+                                <span *ngIf="packageById.supplier.country">, {{packageById.supplier.country}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="packageById" class="card-footer" style="color: grey">
+                        <i class="material-icons" style="font-size: 13px">person</i> {{packageById.createdByFullname}}
+                        | <i class="material-icons" style="font-size: 13px">date_range</i> {{packageById.createdDate|
+                        date:'medium'}}
+                    </div>
+                </div>
+                <div class="row" *ngIf="!packageItemEditMode">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            Package Items
+                                        </div>
+                                        <div class="col-md-4">
+                                            <form style="margin-top: 0px;margin-bottom: 0px"
+                                                  class="navbar-form navbar-right" role="search">
+                                                <button (click)="viewDragAndDrop()"
+                                                        class="btn btn-success btn-round btn-just-icon">
+                                                    <i class="material-icons">add_box</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div class="card-content table-full-width">
+                                <div class="table-responsive">
+                                    <div class="form-group label-floating">
+                                        <table class="table table-hover table-striped">
+                                            <tr *ngFor="let item of droppedItems">
+                                                <td>
+                                                    <img style="cursor: pointer;width: 100px;transform: scale(1.1);"
+                                                         *ngIf="item.image"
+                                                         [src]="getImage(item.image)"
+                                                         width="100%">
+                                                    <img style="cursor: pointer;width: 100px;transform: scale(1.08);"
+                                                         *ngIf="!item.image" src="assets/img/noimage1.jpg"
+                                                         width="100%">
+                                                </td>
+                                                <td>
+                                                    <strong>{{item.itemName}}</strong><br/>
+                                                    <span *ngIf="item.description">{{item.description}}<br/></span>
+                                                    <span style="font-size: 12px;margin-top: 10px;color: grey">{{item.createdByFullname}} | {{item.createdDate | date:'medium'}}</span>
+                                                    <span style="float: right" class="label label-info">{{item.category}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-content table-full-width">
+                                <div class="table-responsive">
+                                    <div class="form-group label-floating">
+                                        <table class="table table-hover table-striped" *ngIf="packageById">
+                                            <tr>
+                                                <td width="100px">
+                                                    Package Subtotal
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <span style="font-size: 20px">{{packageById.cost | number : '1.2-2'}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Package Sales Tax
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <span style="font-size: 20px">{{packageTax | number : '1.2-2'}}</span><br/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Package Markup/Discount
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <span style="font-size: 20px">{{packageMarkup | number : '1.2-2'}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <strong>Package Total Cost</strong>
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <span style="font-size: 30px">{{packageTotal | number : '1.2-2'}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="packageItemEditMode">
+                    <!--<div class="col-md-3">-->
+                    <!--<div class="card">-->
+                    <!--<div class="card-header">-->
+                    <!--<h4 class="card-title">-->
+                    <!--Category-->
+                    <!--</h4>-->
+                    <!--</div>-->
+                    <!--<div class="card-content">-->
+                    <!--<table class="table table-hover">-->
+                    <!--<tr *ngFor="let c of categories">-->
+                    <!--<td style="padding: 0px">-->
+                    <!--<button class="btn btn-twitter {{c.id == selectedCategoryId ? '':'btn-simple'}}"-->
+                    <!--(click)="findItemByCategory(c.id)"-->
+                    <!--style="margin: 0px;width: 100%;text-align: left">{{c.categoryName}}-->
+                    <!--</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="col-md-7">
+                        <div class="card panel panel-default" droppable (onDrop)="onItemDropBack($event)">
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <select class="selectpicker" data-live-search="true"
+                                                data-style="select-with-transition"
+                                                required name="itemcategory" [(ngModel)]="selectedCategoryId"
+                                                (change)="findItemByCategory()"
+                                                title="Choose a category">
+                                            <option disabled selected value="">Choose a category</option>
+                                            <option *ngFor="let c of categories" [ngValue]="c.id">
+                                                {{c.categoryName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button (click)="findItemByCategory()" type="button"
+                                                class="btn btn-primary btn-round btn-just-icon pull-right">
+                                            <i class="material-icons">refresh</i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--<div class="panel-heading"></div>-->
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li draggable *ngFor="let item of notDroppedItems"
+                                            [dragData]="item" class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <img style="cursor: pointer;width: 100px"
+                                                         *ngIf="item.image"
+                                                         [src]="getImage(item.image)"
+                                                         width="100%">
+                                                    <img style="cursor: pointer;width: 100px"
+                                                         *ngIf="!item.image" src="assets/img/noimage1.jpg"
+                                                         width="100%">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <strong>{{item.itemName}}</strong><br/>
+                                                    <span *ngIf="item.description">{{item.description}}<br/></span>
+                                                    <span style="font-size: 12px;margin-top: 10px;color: grey">{{item.createdByFullname}} | {{item.createdDate | date:'medium'}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card panel panel-default" droppable (onDrop)="onItemDrop($event)">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="card-title">
+                                            Package Items
+                                        </h4>
+                                        <p class="category">
+                                            Drag & drop items to the package item list.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form style="margin-top: 0px;margin-bottom: 0px"
+                                              class="navbar-form navbar-right" role="search">
+                                            <button (click)="goBack()" href="#description-1" role="tab"
+                                                    data-toggle="tab"
+                                                    class="btn btn-round btn-rose btn-just-icon">
+                                                <i class="material-icons">arrow_back</i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li *ngFor="let item of droppedItems" [dragData]="item" draggable
+                                            class="list-group-item">
+                                            {{item.itemName}}
+                                            <span style="float: right"
+                                                  class="label label-info">{{item.category}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button (click)="savePackageItem()" type="button" class="btn btn-primary">
+                                    SAVE
+                                </button>
+                                <button (click)="resetPackageItemList()" type="button" class="btn btn-default">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <h4 class="card-title">
+                    Package Images
+                </h4>
+            </div>
+            <div class="card-content">
+
+                <ul id="gallery-ul">
+                    <li id="gallery-li" class="col-lg-2 col-md-2 col-sm-3 col-xs-6" *ngFor="let image of images">
+
+                        <img class="myImage" (click)="viewImage(image.fkId)" class="img-item" width="100%"
+                             [src]="getImage(image.image)">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <span class="close" id="close-btn">&times;</span>
+    <img *ngIf="selectedImg" [src]="getImage(selectedImg)" class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>

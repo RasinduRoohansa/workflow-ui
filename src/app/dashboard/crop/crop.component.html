@@ -1,0 +1,33 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Crop Image</h4>
+            <p class="category">
+                Select image & area of image to crop to, then click on crop button.
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="file-upload" style="height: 305px;width: 100%">
+                        <div *ngIf="imageSelected">
+                            <img-cropper #cropper [image]="data"
+                                         [settings]="cropperSettings"></img-cropper>
+                        </div>
+                        <img style="width: 100%" *ngIf="!imageSelected" src="assets/img/simg2.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <span class="btn btn-rose btn-file">
+                <span class="fileinput-new"><i class="material-icons">add_to_photos</i></span>
+                <input id="custom-input" accept="image/*" type="file" (change)="fileChangeListener($event)"
+                       name="..."/>
+            </span>
+            <button type="submit" (click)="crop()" class="btn btn-primary">CROP</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

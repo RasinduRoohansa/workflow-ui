@@ -1,0 +1,30 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Walk Through Questionnaire Template
+            </h4>
+            <p class="category">
+                Pick a questionnaire template from the drop down list & continue the walk through
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <select class="selectpicker"
+                            [(ngModel)]="templateId"
+                            data-style="select-with-transition" title="Choose a template"
+                            data-size="7">
+                        <option *ngFor="let template of templates" [ngValue]="template.id">
+                            {{template.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" (click)="selectTemplate()" class="btn btn-primary">Create</button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

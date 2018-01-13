@@ -1,0 +1,66 @@
+<form (submit)="saveVenueSpace()">
+    <div class="modal-dialog" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="close()">&times;</button>
+                <h4 class="modal-title">{{update ? 'Update' : 'Add'}} Space/Room - {{venueName}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Space/Room name :<span
+                                    class="star">*</span></label>
+                            <input required [(ngModel)]="space.name" name="spacename"
+                                   type="text"
+                                   pattern="[a-zA-Z0-9\s]+"
+                                   class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Min. Pax :</label>
+                                    <input [(ngModel)]="space.min" name="min"
+                                           type="number" min="1"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Max. Pax :<span
+                                            class="star">*</span></label>
+                                    <input required [(ngModel)]="space.max" name="max"
+                                           type="number" min="1"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div *ngIf="!image" class="select-img" (click)="selectImg()">
+
+                        </div>
+                        <img (click)="selectImg()" class="view-big"
+                             style="cursor: pointer;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro"
+                             *ngIf="image" [src]="image.image"
+                             width="100%">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Description :</label>
+                            <input [(ngModel)]="space.description" name="description"
+                                   type="text"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">{{update ? 'UPDATE' : 'ADD'}}</button>
+                <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

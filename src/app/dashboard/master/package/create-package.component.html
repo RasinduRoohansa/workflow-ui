@@ -1,0 +1,161 @@
+<form (submit)="createPackage()">
+    <div class="modal-dialog modal-lg" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cancel()">&times;</button>
+                <h4 class="modal-title">Create New Package</h4>
+                <p class="category">
+                    Select a supplier & press create package button to continue.
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group label-floating">
+                            <select class="selectpicker" data-live-search="true" data-style="select-with-transition"
+                                    required name="itemcategory" [(ngModel)]="package.fkSupplier"
+                                    title="Choose a supplier">
+                                <option disabled selected value="">Choose a supplier</option>
+                                <option *ngFor="let supplier of suppliers" [ngValue]="supplier.id">
+                            <span style="font-weight: bold" *ngIf="supplier.supplierName">
+                                {{supplier.supplierName}}
+                            </span>
+                                    <span style="font-weight: bold" *ngIf="supplier.companyName">
+                                - {{supplier.companyName}}
+                            </span>
+                                    <span style="font-weight: bold" *ngIf="supplier.code"> - {{supplier.code}}</span>
+
+                                    <span style="font-size: 12px;">
+                                {{supplier.streetOne}}
+                                <span *ngIf="supplier.streetTwo">, {{supplier.streetTwo}}</span>
+                                <span *ngIf="supplier.city">, {{supplier.city}}</span>
+                                <span *ngIf="supplier.country">, {{supplier.country}}</span>
+                            </span>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Package Name<span
+                                            class="star">*</span></label>
+                                    <input required [(ngModel)]="package.packageName" name="packageName"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Package Description</label>
+                                    <input required [(ngModel)]="package.description" name="description"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div *ngIf="!image" class="select-img" style=" height: 153px;" (click)="selectImg()">
+
+                        </div>
+                        <img (click)="selectImg()" class="view-big"
+                             style="cursor: pointer;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                             *ngIf="image" [src]="image.image"
+                             width="100%">
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">
+                        <select [(ngModel)]="package.unitType" name="unitType" class="form-control">
+                            <option value="Quantity">Quantity</option>
+                            <option value="Hours">Hours</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group label-floating">
+                            <label class="control-label" *ngIf="package.unitType == 'Quantity'">Quantity</label>
+                            <label class="control-label" *ngIf="package.unitType == 'Hours'">Hours</label>
+                            <input required name="qty"
+                                   (keyup)="calculateValues()"
+                                   type="text" [(ngModel)]="package.qty"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Cost</label>
+                            <input required name="cost"
+                                   (keyup)="calculateValues()"
+                                   type="text" [(ngModel)]="package.cost"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Sales Tax Rate (%)</label>
+                            <div *ngIf="update">
+                                <div *ngIf="!taxEditMode" style="margin-top: 20px">
+                                    <a class="edit-btn" (click)="editTaxList()">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <span *ngFor="let tax of selectedTax">{{tax.taxName}} {{tax.taxRate}},</span>
+                                </div>
+                                <select *ngIf="taxEditMode" [(ngModel)]="selectedTax" (change)="calculateTax()"
+                                        class="selectpicker" name="taxlist"
+                                        data-style="select-with-transition"
+                                        multiple title="Choose Tax">
+                                    <option *ngFor="let tax of taxList" [ngValue]="tax">{{tax.taxName}} {{tax.taxRate}}%
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="!update">
+                                <select [(ngModel)]="selectedTax" (change)="calculateTax()"
+                                        class="selectpicker" name="taxlist"
+                                        data-style="select-with-transition"
+                                        multiple title="Choose Tax">
+                                    <option *ngFor="let tax of taxList" [ngValue]="tax">{{tax.taxName}} {{tax.taxRate}}%
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Markup/Discount (%)</label>
+                            <input required type="text"
+                                   (keyup)="calculateValues()"
+                                   [(ngModel)]="package.markup" class="form-control" name="markup">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Package Subtotal</strong><br/>
+                        <span style="font-size: 20px">{{package.cost | number : '1.2-2'}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Package Sales Tax</strong><br/>
+                        <span style="font-size: 20px">{{packageTax | number : '1.2-2'}}</span><br/>
+                        <span style="color: grey;font-size: 12px">Markup/Discount is added after tax is calculated.</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Package Markup/Discount</strong><br/>
+                        <span style="font-size: 20px">{{packageMarkup | number : '1.2-2'}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Package Total Cost</strong><br/>
+                        <span style="font-size: 20px">{{packageTotal | number : '1.2-2'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    {{update ? 'UPDATE PACKAGE':'CREATE PACKAGE'}}
+                </button>
+                <button type="button" class="btn btn-default" (click)="cancel()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</form>

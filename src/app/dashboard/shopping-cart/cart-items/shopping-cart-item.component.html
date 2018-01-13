@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="blue">
+                <i class="material-icons">shopping_cart</i>
+            </div>
+            <div class="card-content table-full-width">
+                <h4 class="card-title">
+                    Cart Items
+                    <a *ngIf="parentComponent" scrollTo href="#shopping-card-set" [tooltip]="goBackToStore"
+                       [tooltipAnimation]="true" (click)="hideCartItem()"
+                       class="btn btn-rose btn-round btn-just-icon pull-right">
+                        <i class="material-icons">vertical_align_top</i>
+                    </a>
+                    <div>
+                        <tooltip-content #goBackToStore>
+                            <b>Press me to view shopping store</b>
+                        </tooltip-content>
+                    </div>
+                </h4>
+                <br/>
+                <div class="table-responsive">
+                    <table width="100%" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th width="120px">#</th>
+                            <th>Package Name</th>
+                            <th>Qty</th>
+                            <th style="text-align: right">Unit Cost</th>
+                            <th style="text-align: right;width: 200px">Cost</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of packageItems">
+                            <td>
+                                <img *ngIf="item.image" class="view-big-more"
+                                     [src]="getImage(item.image)" style="width: 100px"/>
+                                <img *ngIf="!item.image" class="view-big-more"
+                                     src="assets/img/noimage4.jpg" style="width: 100px"/>
+                            </td>
+                            <td>
+                                <strong>{{item.packageName}}</strong>
+                            </td>
+                            <td>
+                                <strong>{{item.qty}}</strong>
+                            </td>
+                            <td style="text-align: right">
+                                {{item.totalCost| number : '1.2-2'}} AUD
+                            </td>
+                            <td style="text-align: right">
+                                <span style="color: red"><strong>{{item.totalCost * item.qty| number : '1.2-2'}}</strong> <strong
+                                        style="color: grey">AUD</strong></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: right">
+                                <strong>Total :</strong>
+                            </td>
+                            <td style="text-align: right">
+                                <strong style="font-size: 25px;">{{total| number :
+                                    '1.2-2'}}</strong><span
+                                    style="color: grey"> <strong>AUD</strong> </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

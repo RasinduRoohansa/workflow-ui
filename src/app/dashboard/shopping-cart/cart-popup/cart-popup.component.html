@@ -1,0 +1,56 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Change Package Details</h4>
+            <p class="category">
+                Please select the quantity before adding to the cart.
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div *ngIf="packageData">
+                        <div class="card">
+                            <img *ngIf="packageData.image" [src]="getImage(packageData.image)"
+                                 width="100%">
+                            <img *ngIf="!packageData.image" src="assets/img/noimage3.jpg"
+                                 width="100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="shopping-card-title">{{packageData.packageName}}</div>
+                    <div class="shopping-card-price">{{packageData.totalCost| number : '1.2-2'}}
+                        AUD
+                    </div>
+                    <!--<div class="form-group label-floating">-->
+                    <!--<label class="control-label">Cost</label>-->
+                    <!--<input [(ngModel)]="dataSet.cost" name="qty-text" required type="text"-->
+                    <!--class="form-control">-->
+                    <!--</div>-->
+                    <div class="form-group label-floating">
+                        <label class="control-label">Quantity</label>
+                        <input min="1" [(ngModel)]="dataSet.qty" name="qty-text" required type="number"
+                               class="form-control">
+                    </div>
+                    <div *ngIf="dataExists && dataExists.id">
+                        Package is already added to the cart. <br/><strong>Qty :</strong> <strong style="color: red">{{dataExists.qty}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="dataExists && dataExists.id" type="button" class="btn btn-success" (click)="updateQty()">
+                <i class="material-icons">update</i> Update Qty
+            </button>
+            <button *ngIf="dataExists && dataExists.id" type="button" class="btn btn-warning" (click)="addQty()">
+                <i class="material-icons" style="margin-right: 10px">add_shopping_cart</i> Add Qty
+            </button>
+            <button *ngIf="dataExists && !dataExists.id" type="button" class="btn btn-warning" (click)="addToCart()">
+                <i class="material-icons" style="margin-right: 10px">add_shopping_cart</i> Add To Cart
+            </button>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>

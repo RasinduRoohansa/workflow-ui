@@ -1,0 +1,141 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Bookings</h4>
+
+                        <button class="btn btn-primary btn-xs">All
+                        </button>
+                        <button class="btn {{status == 2 ? 'btn-primary':'btn-warning'}} btn-xs">New
+                        </button>
+                        <button class="btn {{status == 3 ? 'btn-primary':'btn-warning'}} btn-xs">Today
+                        </button>
+                        <button class="btn {{status == 4 ? 'btn-primary':'btn-warning'}} btn-xs">Tomorrow
+                        </button>
+                        <button class="btn {{status == 5 ? 'btn-primary':'btn-warning'}} btn-xs">Completed
+                        </button>
+                    </div>
+                    <div class="card-content table-full-width">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr *ngFor="let booking of bookings">
+                                    <td style="text-align: center">
+                                        <img *ngIf="booking.enquiry.customer.profileImage != null"
+                                             style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                             class="view-big"
+                                             src="{{booking.enquiry.customer.profileImage}}"/>
+                                        <img *ngIf="booking.enquiry.customer.profileImage == null"
+                                             style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                             class="view-big"
+                                             src="assets/img/propic.jpg">
+                                    </td>
+                                    <td style="text-align: center;width: 100px">
+                                        <span (click)="navigateToBookingDashboard(booking.id)"
+                                              class="label label-info label-btn-info">{{booking.bookingNumber}}</span>
+                                    </td>
+                                    <td>
+                                        <strong>{{booking.enquiry.customer.firstName}}
+                                            {{booking.enquiry.customer.lastName}}</strong><br/>
+                                        {{booking.enquiry.venue}} - {{booking.enquiry.venueName}} -
+                                        <strong style="color: grey">{{booking.enquiry.eventType}}</strong><br/>
+                                        <span style="color: grey;font-size: 12px">
+                                                From <strong>{{booking.startDate | date:'short'}}</strong> To <strong>{{booking.endDate | date:'short'}}</strong>
+                                        </span>
+                                        <span style="color: grey;font-size: 12px">
+                                                <i class="material-icons" style="font-size: 12px;margin-top: 5px">date_range</i>
+                                            {{booking.createdDate | date:'medium'}}
+                                        </span>
+                                    </td>
+                                    <td style="text-align: center;background-color: #f4f4f3;width: 100px">
+                                        <span style="font-weight: bold">{{booking.startDate | date: 'MMM'}}</span><br/>
+                                        <span style="font-size: 20px">{{booking.startDate | date: 'dd'}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!--<div class="card">-->
+                <!--<div class="card-header">-->
+                <!--<h4 class="card-title">Today Event (2)</h4>-->
+                <!--</div>-->
+                <!--<div class="card-content">-->
+                <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                <!--<div style="padding: 10px">-->
+                <!--<span style="font-size: 25px">Sri Lankan Wedding</span><br/>-->
+                <!--<strong style="font-style: italic">Stelan Simonsz</strong> |-->
+                <!--The Grand Metropol - Grace Wall Room. |-->
+                <!--<span style="font-size: 15px">12:00 AM</span>-->
+                <!--</div>-->
+                <!--<div style="padding: 10px">-->
+                <!--<span style="font-size: 25px">Sri Lankan Wedding</span><br/>-->
+                <!--<strong style="font-style: italic">Stelan Simonsz</strong> |-->
+                <!--The Grand Metropol - Grace Wall Room. |-->
+                <!--<span style="font-size: 15px">12:00 AM</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="card" *ngIf="nextBooking">
+                    <div class="card-header">
+                        <h4 class="card-title">Next Event ...</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="next-evt center-block">
+                                    <span style="font-weight: bold">{{nextBooking.startDate | date: 'MMM'}}</span><br/>
+                                    <span style="font-size: 20px">{{nextBooking.startDate | date: 'dd'}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div style="padding: 10px">
+                                    <span style="font-size: 25px">{{nextBooking.enquiry.eventType}}</span><br/>
+                                    <strong style="font-style: italic">{{nextBooking.enquiry.customer.firstName}}
+                                        {{nextBooking.enquiry.customer.lastName}}</strong> |
+                                    {{nextBooking.enquiry.venue}} - {{nextBooking.enquiry.venueName}} |
+                                    <span style="font-size: 15px">{{nextBooking.startDate | date:'shortTime'}}</span><br/>
+                                    <span style="margin-top: 3px"
+                                          (click)="navigateToBookingDashboard(nextBooking.id)"
+                                          class="label label-info label-btn-info">{{nextBooking.bookingNumber}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content table-full-width">
+                        <table class="table number-tbl">
+                            <tr>
+                                <td style="width: 33%;background-color: #e8ceb1;padding: 0px">
+                                    <span class="number-td" style="color: #ac6d28">37</span>
+                                    <div style="padding: 5px;width: 100%;background-color: #ac6d28;color: white">
+                                        BOOKINGS
+                                    </div>
+                                </td>
+                                <td style="background-color: gainsboro;padding: 0px">
+                                    <span class="number-td" style="color: #425159">2</span>
+                                    <div style="padding: 5px;width: 100%;background-color: #425159;color: white">
+                                        ONGOING
+                                    </div>
+                                </td>
+                                <td style="width: 33%;background-color: #cbe2cc;padding: 0px">
+                                    <span class="number-td" style="color: #4caf50">35</span>
+                                    <div style="padding: 5px;width: 100%;background-color: #4caf50;color: white">
+                                        COMPLETED
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

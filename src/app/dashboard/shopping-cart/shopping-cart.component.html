@@ -1,0 +1,412 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="orange">
+                <i class="material-icons">shopping_cart</i>
+            </div>
+            <div class="card-content table-full-width">
+                <h4 class="card-title">Cart Details</h4>
+                <div aria-multiselectable="false" class="panel-group" id="accordion" role="tablist">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" id="headingOne" role="tab" style="padding-left: 10px">
+                            <a aria-controls="collapseOne" aria-expanded="true" data-parent="#accordion"
+                               data-toggle="collapse" href="#collapseOne" role="button" class="">
+                                <h4 class="panel-title">
+                                    Cart Summery
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </h4>
+                            </a>
+                        </div>
+                        <div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapseOne"
+                             role="tabpanel" aria-expanded="true" style="">
+                            <div class="panel-body">
+                                <div id="cart-summery">
+                                    <div class="card-content table-full-width">
+
+                                        <div droppable (onDrop)="onItemDrop($event)"
+                                             style="text-align: center;width: 100%">
+                                            <img src="assets/img/dragndrop.jpg" style="width: 100%"/>
+                                        </div>
+                                        <table class="table">
+                                            <tr>
+                                                <td>
+                                                    Subtotal
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <strong>{{subTotal| number : '1.2-2'}}</strong><span
+                                                        style="color: grey"> <strong>AUD</strong> </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax</td>
+                                                <td style="text-align: right">
+                                                    <strong>{{tax| number : '1.2-2'}}</strong><span
+                                                        style="color: grey"> <strong>AUD</strong> </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td style="text-align: right">
+                                                    <strong style="font-size: 25px;">{{total| number :
+                                                        '1.2-2'}}</strong><span
+                                                        style="color: grey"> <strong>AUD</strong> </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <a scrollTo href="#cart-item-panel" type="button"
+                                                               (click)="viewCartItem()" style="width: 100%"
+                                                               class="btn btn-sm btn-primary">
+                                                                VIEW ITEMS
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a scrollTo href="#cart-item-panel" type="button"
+                                                               (click)="bookNow()" style="width: 100%"
+                                                               class="btn btn-sm btn-success">
+                                                                BOOK NOW
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" id="headingTwo" role="tab" style="padding-left: 10px">
+                            <a aria-controls="collapseTwo" aria-expanded="false" class="collapsed"
+                               data-parent="#accordion" data-toggle="collapse" href="#collapseTwo" role="button">
+                                <h4 class="panel-title">
+                                    Filters
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </h4>
+                            </a>
+                        </div>
+                        <div aria-labelledby="headingTwo" class="panel-collapse collapse" id="collapseTwo"
+                             role="tabpanel" aria-expanded="false" style="height: 0px;">
+                            <div class="panel-body">
+                                <div style="z-index: 5">
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <select class="selectpicker" data-live-search="true"
+                                                        data-style="select-with-transition" (change)="findPackages()"
+                                                        required name="itemcategory"
+                                                        [(ngModel)]="searchCart.fkItemCategory"
+                                                        title="Choose a category">
+                                                    <option selected [ngValue]="null">No Category</option>
+                                                    <option *ngFor="let c of categories" [ngValue]="c.id">
+                                                        {{c.categoryName}}
+                                                    </option>
+                                                </select>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Search</label>
+                                                    <input name="search" (keyup)="findPackages()"
+                                                           [(ngModel)]="searchCart.search"
+                                                           type="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="form-group label-floating">
+                                                    <span style="color: #AAAAAA">Price : {{searchCart.from| number : '1.2-2'}} - {{searchCart.to| number : '1.2-2'}}</span>
+                                                    <div id="sliderDouble" class="slider slider-info"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9" id="shopping-cart-id">
+        <div class="card">
+            <div class="card-header card-header-icon" data-background-color="orange">
+                <i class="material-icons">store</i>
+            </div>
+            <div class="card-content">
+                <h4 class="card-title">
+                    Store
+                    <a scrollTo href="#top-row" [tooltip]="goBackToTop"
+                       [tooltipAnimation]="true"
+                       class="btn btn-rose btn-round btn-just-icon pull-right">
+                        <i class="material-icons">vertical_align_top</i>
+                    </a>
+                    <div>
+                        <tooltip-content #goBackToTop>
+                            <b>Press me to go up</b>
+                        </tooltip-content>
+                    </div>
+                </h4>
+                <div class="row" *ngIf="loading">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="assets/img/loading_cart.gif" style="width: 250px"/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row" *ngIf="!loading">
+                    <div class="col-md-4" *ngFor="let store of stores">
+                        <div class="card-container">
+                            <div draggable [dragData]="store" class="card">
+                                <div class="front">
+                                    <div class="content">
+                                        <img *ngIf="store.image" [src]="getImage(store.image)"
+                                             width="100%">
+                                        <img *ngIf="!store.image" src="assets/img/noimage3.jpg"
+                                             width="100%">
+
+                                        <div class="shopping-card-title">{{store.packageName}}</div>
+                                        <div class="shopping-card-price">{{store.totalCost| number : '1.2-2'}}
+                                            AUD
+                                        </div>
+                                        <div class="shopping-card-desc">
+                                            {{store.supplier.supplierName}}<br/><strong>{{store.supplier.companyName}}</strong>
+                                        </div>
+                                    </div>
+                                </div> <!-- end front panel -->
+                                <div class="back">
+                                    <div class="content">
+                                        <div class="shopping-card-title">{{store.packageName}}</div>
+                                        <div class="main table-full-width">
+                                            <div class="shopping-card-price-2">{{store.totalCost | number :
+                                                '1.2-2'}}
+                                                AUD
+                                            </div>
+
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        Price
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        {{store.cost| number : '1.2-2'}} AUD
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tax
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        {{store.taxRate}} %
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Markup/Discount
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        {{store.markup}} %
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div class="shopping-card-footer">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a scrollTo href="#card-view-more"
+                                                           (click)="viewMore(store)"
+                                                           style="width: 100%"
+                                                           class="btn btn-primary btn-sm">
+                                                            <i class="material-icons"
+                                                               style="margin-right: 10px">more</i>
+                                                            <span class="hidden-xs">More</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button (click)="addToCart(store)" style="width: 100%"
+                                                                class="btn btn-warning btn-sm">
+                                                            <i class="material-icons"
+                                                               style="margin-right: 10px">add_shopping_cart</i>
+                                                            <span class="hidden-xs">Add</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!loading">
+                    <div class="col-md-12" style="text-align: center">
+
+                        <ul class="pagination pagination-primary">
+                            <!--<li><a href="#"><</a></li>-->
+                            <li *ngFor="let i of pageNumbers"
+                                class="{{i==currentPageNumber?'active':''}} pageNumberBtn">
+                                <a (click)="changePageNumber(i)">{{i}}</a></li>
+                            <!--<li><a href="#">></a></li>-->
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="min-height: 550px">
+
+    <div id="cart-item-panel">
+        <shopping-cart-items *ngIf="viewCartItemMode == true" [referenceParent]="this"
+                             [fkWalkThroughId]="fkWalkThroughId"></shopping-cart-items>
+    </div>
+
+    <div id="card-view-more">
+        <div class="row" *ngIf="viewPackageMode == true">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="blue">
+                        <i class="material-icons">camera_alt</i>
+                    </div>
+                    <div class="card-content">
+
+                        <br/>
+                        <br/>
+                        <img *ngIf="image" class="view-big-more"
+                             [src]="image.image" width="100%"/>
+                        <img *ngIf="!image" class="view-big-more"
+                             src="assets/img/noimage4.jpg" width="100%"/>
+                        <br/>
+                        <br/>
+
+                        <div style="width: 100%;text-align: justify">
+                            {{viewPackage.description}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title">
+                                    {{viewPackage.packageName}}
+                                </h4>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <tooltip-content #shoppingCart>
+                                        <b><b>Press me to view shopping store</b></b>
+                                    </tooltip-content>
+                                </div>
+                                <a scrollTo href="#shopping-card-set" type="button" (click)="goToShoppingCart()"
+                                   [tooltip]="shoppingCart" [tooltipAnimation]="true"
+                                   class="btn btn-round btn-rose btn-just-icon pull-right">
+                                    <i class="material-icons">vertical_align_top</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="more-view-box">
+                        <span class="more-view-price">
+                            <span style="color: grey">Total : </span> {{calculateValues(viewPackage)| number : '1.2-2'}}
+                            <span style="color: grey">AUD</span></span>
+                        </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered">
+                                <tr *ngFor="let item of packageItems">
+                                    <td width="120px">
+                                        <img style="cursor: pointer;width: 100px"
+                                             *ngIf="item.image"
+                                             [src]="getImage(item.image)"
+                                             width="100%">
+                                        <img style="cursor: pointer;width: 100px"
+                                             *ngIf="!item.image" src="assets/img/noimage3.jpg"
+                                             width="100%">
+                                    </td>
+                                    <td>
+                                        <strong>{{item.itemName}}</strong><br/>
+                                        <span *ngIf="item.description">{{item.description}}<br/></span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" class="table">
+                                <tr>
+                                    <td>
+                                        <strong>Supplier Details</strong>
+                                        <hr/>
+                                        <strong>
+                                            {{viewPackage.supplier.supplierName}}
+                                            <span *ngIf="viewPackage.supplier.companyName"> - {{viewPackage.supplier.companyName}}</span>
+                                        </strong> <br/>
+                                        {{viewPackage.supplier.streetOne}}
+                                        <span *ngIf="viewPackage.supplier.streetTwo">, {{viewPackage.supplier.streetTwo}}</span>
+                                        <span *ngIf="viewPackage.supplier.city">, {{viewPackage.supplier.city}}</span>
+                                        <span *ngIf="viewPackage.supplier.country">| {{viewPackage.supplier.country}}</span>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                    <span><i class="material-icons"
+                                                             style="font-size: 15px;">call</i><a
+                                                            href="tel:{{viewPackage.supplier.telephoneOne}}"> {{viewPackage.supplier.telephoneOne}}</a></span>
+                                                <span *ngIf="viewPackage.supplier.telephoneTwo"> ,
+                                                        <i class="material-icons"
+                                                           style="font-size: 15px;">call</i><a
+                                                            href="tel:{{viewPackage.supplier.telephoneTwo}}"> {{viewPackage.supplier.telephoneTwo}}</a></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span style="float: right" class="label label-info">{{viewPackage.supplier.code}}</span>
+                                                <span *ngIf="viewPackage.supplier.email">
+                                                        <i class="material-icons" style="font-size: 15px;">email</i>
+                                                    <a href="mailto:{{viewPackage.supplier.email}}"
+                                                       target="_top">{{viewPackage.supplier.email}}</a></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="color: grey">
+                        <i class="material-icons" style="font-size: 13px">person</i> {{viewPackage.createdByFullname}}
+                        | <i class="material-icons" style="font-size: 13px">date_range</i> {{viewPackage.createdDate|
+                        date:'medium'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="viewPackageMode == true">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            Package Images
+                        </h4>
+                    </div>
+                    <div class="card-content">
+
+                        <ul id="gallery-ul">
+                            <li id="gallery-li" class="col-lg-2 col-md-2 col-sm-3 col-xs-6"
+                                *ngFor="let image of images">
+
+                                <img class="myImage" (click)="viewImageFull(image.fkId)" class="img-item" width="100%"
+                                     [src]="getImage(image.image)">
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="myModal" class="modal">
+    <span class="close" id="close-btn">&times;</span>
+    <img *ngIf="selectedImg" [src]="getImageBase64(selectedImg)" class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>

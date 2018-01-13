@@ -1,0 +1,126 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                        <li class="active">
+                            <a href="#description-1" role="tab" data-toggle="tab">
+                                <!--<i class="material-icons md-18">vpn_key</i> -->
+                                Itinerary
+                            </a>
+                        </li>
+                        <!--<li>-->
+                        <!--<a href="#description-2" role="tab" data-toggle="tab">-->
+                        <!--&lt;!&ndash;<i class="material-icons md-18">vpn_key</i> &ndash;&gt;-->
+                        <!--Add Itinerary-->
+                        <!--</a>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="description-1">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    Category
+                                    <a (click)="addCategory()"
+                                       class="btn btn-success btn-round btn-fab btn-fab-mini pull-right">
+                                        <i class="material-icons">add_box</i>
+                                    </a>
+                                </h4>
+                                <p class="category">
+
+                                </p>
+                            </div>
+                            <div class="card-content">
+                                <table class="table table-hover">
+                                    <tr *ngFor="let c of categories">
+                                        <td style="padding: 0px">
+                                            <button class="btn btn-twitter {{c.id == selectedCategoryId ? '':'btn-simple'}}"
+                                                    (click)="findItemByCategory(c.id)"
+                                                    style="margin: 0px;width: 100%;text-align: left">{{c.categoryName}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Items
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form style="margin-top: 0px;margin-bottom: 0px"
+                                                  class="navbar-form navbar-right" role="search">
+                                                <div class="form-group form-search is-empty">
+                                                    <input (keyup)="filterItem()" [(ngModel)]="searchText"
+                                                           name="searchfilter" type="text" class="form-control"
+                                                           placeholder="Search">
+                                                </div>
+                                                <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                                <button (click)="findItem()" type="button"
+                                                        class="btn btn-primary btn-round btn-just-icon">
+                                                    <i class="material-icons">refresh</i>
+                                                </button>
+                                                <button (click)="addItem()" type="button"
+                                                        class="btn btn-success btn-round btn-just-icon">
+                                                    <i class="material-icons">add_box</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </h4>
+                                <p class="category">
+
+                                </p>
+                            </div>
+                            <div class="card-content">
+                                <table class="table table-hover">
+                                    <tr *ngFor="let item of items">
+                                        <td>
+                                            <img style="cursor: pointer;width: 100px"
+                                                 *ngIf="item.image"
+                                                 [src]="getImage(item.image)"
+                                                 width="100%">
+                                            <img style="cursor: pointer;width: 100px"
+                                                 *ngIf="!item.image" src="assets/img/noimage1.jpg"
+                                                 width="100%">
+                                        </td>
+                                        <td>
+                                            <a style="margin-right: 10px"
+                                               (click)="updateItem(item)"
+                                               class="edit-btn">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                            <strong>{{item.itemName}}</strong><br/>
+                                            <span *ngIf="item.description">{{item.description}}<br/></span>
+                                            <span style="float: right" class="label label-info">{{item.category}}</span>
+                                            <span style="font-size: 12px;margin-top: 10px;color: grey">{{item.createdByFullname}} | {{item.createdDate | date:'medium'}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="tab-pane" id="description-2">-->
+
+            <!--</div>-->
+        </div>
+    </div>
+</div>

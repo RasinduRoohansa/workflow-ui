@@ -1,0 +1,72 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Transport Voucher
+                </h4>
+                <p class="category">
+
+                </p>
+            </div>
+            <div class="card-content table-full-width">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            Pick Up Details
+                        </th>
+                        <th>Customer</th>
+                        <th>Driver</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let voucher of transportVoucherList">
+                        <td>
+                            <span class="label label-info">{{voucher.voucherNumber}}</span>
+                        </td>
+                        <td>
+                            {{voucher.pickupLocation}}<br/>
+                            <span style="font-weight: bold;font-size: 12px">{{voucher.pickUpTime |date :'shortTime'}}</span>
+                        </td>
+                        <td>
+                            <img *ngIf="voucher.customerProfilePic != null"
+                                 style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;margin-right: 10px"
+                                 class="view-big"
+                                 src="{{voucher.customerProfilePic}}"/>
+                            <img *ngIf="voucher.customerProfilePic == null"
+                                 style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;margin-right: 10px"
+                                 class="view-big"
+                                 src="assets/img/propic.jpg">
+
+                            {{voucher.customerName}}
+                        </td>
+                        <td>
+                            <img *ngIf="voucher.thumbnail != null"
+                                 style="cursor: pointer;border-radius: 100%;width:35px;height: 35px;box-shadow: 0px 0px 1px 1px gainsboro;margin-right: 10px"
+                                 class="view-big"
+                                 [src]="getImage(voucher.thumbnail)"/>
+                            <img *ngIf="voucher.thumbnail == null"
+                                 style="cursor: pointer;border-radius: 100%;width:35px;height: 35px;box-shadow: 0px 0px 1px 1px gainsboro;margin-right: 10px"
+                                 class="view-big"
+                                 src="assets/img/propic.jpg">
+                            {{voucher.driverName}}
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-round btn-fab btn-fab-mini"
+                                    (click)="viewTransportVoucher(voucher)">
+                                <i class="material-icons">chrome_reader_mode</i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    </div>
+</div>

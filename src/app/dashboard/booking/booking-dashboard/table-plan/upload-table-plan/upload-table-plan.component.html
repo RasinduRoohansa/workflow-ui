@@ -1,0 +1,45 @@
+<div class="modal-dialog" style="margin-top: 20px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Upload Excel File Data</h4>
+            <p class="category">
+                Select .xlsx files and click upload button to continue.
+            </p>
+        </div>
+        <div class="modal-body" style="min-height: 150px">
+            <div *ngIf="!file" style="text-align: center;color: grey;padding: 20px">
+                <span>No file selected !</span>
+            </div>
+            <table *ngIf="file" style="width: 100%">
+                <tr>
+                    <td style="width: 20%"></td>
+                    <td width="100">
+                        <img src="assets/img/xlsx.png" width="100%"/>
+                    </td>
+                    <td>
+                        {{file.name}}<br/><strong>{{file.size | fileSize}}</strong>
+                        <br/>
+                        <span style="color: grey;font-size: 12px">Last Modified Date : {{file.lastModifiedDate | date:'medium'}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+
+            <span *ngIf="uploading == false" class="btn btn-rose btn-file">
+                <span class="fileinput-new"><i class="material-icons">add_to_photos</i></span>
+                <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                       id="custom-input"
+                       (change)="fileChangeListener($event)" type="file" name="..."/>
+            </span>
+
+            <button [disabled]="uploading == true" type="button" class="btn btn-primary" *ngIf="file"
+                    (click)="upload()"><i
+                    class="material-icons">cloud_upload</i></button>
+            <button type="button" *ngIf="uploading == false" class="btn btn-default" (click)="close()">Cancel
+            </button>
+            <app-loading *ngIf="uploading" [wLoading]="50"></app-loading>
+        </div>
+    </div>
+</div>

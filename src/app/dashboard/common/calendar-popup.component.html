@@ -1,0 +1,29 @@
+<div class="modal-dialog" style="margin-top: 20px;">
+    <div class="modal-content" style=" background-image: url('assets/img/events.jpg')">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 class="modal-title">Calendar Event</h4>
+            <p class="category">
+                Scheduled events details.
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <img width="100%" src="assets/img/events.png">
+                </div>
+                <div class="col-md-9">
+                    <strong>Event Name :</strong><br/>
+                    {{name}}<br/><br/>
+
+
+                    <strong>Event Duration :</strong><br/>
+                    {{start | date:'medium'}} - {{end | date:'medium'}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" (click)="close()">OK</button>
+        </div>
+    </div>
+</div>

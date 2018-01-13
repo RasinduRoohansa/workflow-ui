@@ -1,0 +1,197 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>Enquiry Driver Allocation</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <form style="margin-top: 0px;margin-bottom: 0px"
+                                      class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <input [(ngModel)]="searchText"
+                                               name="searchfilter" type="text" class="form-control"
+                                               placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-info btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                    <button type="button" (click)="getEnquiry()"
+                                            class="btn btn-primary btn-round btn-just-icon">
+                                        <i class="material-icons">refresh</i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content table-full-width" style="min-height: 300px">
+                        <div class="loading-box" *ngIf="loading == true">
+                            <img style="width: 50px;"
+                                 src="assets/fluid-loader.gif"/>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table" *ngIf="loading == false">
+                                <tr class="{{viewEnquiry.id == enquiry.id ? 'info-highlight':''}}"
+                                    *ngFor="let enquiry of enquiries" style="cursor: pointer">
+                                    <td style="text-align: center;width: 100px">
+                                        <img *ngIf="enquiry.customer.profileImage != null"
+                                             style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                             class="view-big"
+                                             src="{{enquiry.customer.profileImage}}"/>
+                                        <img *ngIf="enquiry.customer.profileImage == null"
+                                             style="cursor: pointer;border-radius: 100%;width:35px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                             class="view-big"
+                                             src="assets/img/propic.jpg">
+                                    </td>
+                                    <td (click)="viewSelectedEnquiry(enquiry)">
+                                        <strong>
+                                            {{enquiry.customer.firstName}} {{enquiry.customer.lastName}}
+                                        </strong>
+                                        <span style="float: right;"
+                                              class="label label-warning"
+                                              *ngIf="enquiry.fkDriverAllocation != null">ALLOCATED</span>
+                                        <span *ngIf="enquiry.eventType" style="font-weight: bold;color: grey"> - {{enquiry.eventType}}</span>
+                                        <br/>
+                                        <div>
+                                            <tooltip-content #viewGoogleMap>
+                                                <b>Click to view location on google map</b>
+                                            </tooltip-content>
+                                            <tooltip-content #dropLocation>
+                                                <b>Drop location</b>
+                                            </tooltip-content>
+                                        </div>
+                                        <span style="font-size: 12px">
+                                        <a [tooltip]="viewGoogleMap" [tooltipAnimation]="true" target="#"
+                                           href="{{enquiry.location.url}}">
+                                            <i class="material-icons">location_on</i>
+                                            {{enquiry.location.address}}
+                                        </a> -
+                                        <a [tooltip]="dropLocation" [tooltipAnimation]="true" style="color: gainsboro">
+                                            <i class="material-icons">my_location</i>
+                                            <span style="color: black">{{enquiry.venueName}}</span>
+                                        </a>
+                                        </span><br/>
+                                        <span style="color: grey;font-size: 12px">
+                                                <i class="material-icons" style="font-size: 12px;margin-top: 5px">date_range</i>
+                                            {{enquiry.createdDate | date:'medium'}}
+                                    </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="enquiry-detail" class="box box-widget widget-user-2">
+                    <div class="card" *ngIf="viewEnquiry">
+                        <div class="card-header">
+                            <div>
+                                <tooltip-content #allocateDriver>
+                                    <b>Allocate Driver</b>
+                                </tooltip-content>
+                                <tooltip-content #removeAllocation>
+                                    <b>Un Allocate Driver</b>
+                                </tooltip-content>
+                            </div>
+                            <button type="button"
+                                    *ngIf="viewEnquiry.fkDriverAllocation == null"
+                                    (click)="viewDriverAllocationPopUp(viewEnquiry)"
+                                    [tooltip]="allocateDriver" [tooltipAnimation]="true"
+                                    class="btn btn-success btn-round btn-just-icon pull-right">
+                                <i class="material-icons">tram</i>
+                            </button>
+                            <button type="button"
+                                    *ngIf="viewEnquiry.fkDriverAllocation != null"
+                                    (click)="unAllocateDriver(viewEnquiry)"
+                                    [tooltip]="removeAllocation" [tooltipAnimation]="true"
+                                    class="btn btn-danger btn-round btn-just-icon pull-right">
+                                <i class="material-icons">loop</i>
+                            </button>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center">
+                                    <img *ngIf="viewEnquiry.driver.thumbnail != null"
+                                         style="cursor: pointer;width: 80px; height:80px;border-radius:100%; border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                         class="view-big"
+                                         [src]="getImage(viewEnquiry.driver.thumbnail)"/>
+                                    <img *ngIf="viewEnquiry.driver.thumbnail == null"
+                                         style="cursor: pointer;width: 80px;height:80px;border-radius:100%;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                         class="view-big"
+                                         src="assets/img/propic.jpg"><br/><br/>
+
+                                    <div>
+                                        <span style="font-size: 26px">{{viewEnquiry.driver.fullName}}</span><br/>
+                                    </div>
+                                    <div *ngIf="viewEnquiry.fkDriverAllocation != null">
+                                        <span style="color: grey;font-size: 12px">
+                                                <i class="material-icons" style="font-size: 15px">phone</i>
+                                            <strong><a href="tel:{{viewEnquiry.driver.telephoneOne}}">{{viewEnquiry.driver.telephoneOne}}</a></strong>
+                                            <i class="material-icons" style="font-size: 15px">smartphone</i>
+                                            <strong><a href="tel:{{viewEnquiry.driver.mobile}}">{{viewEnquiry.driver.mobile}}</a></strong>
+                                         </span><br>
+                                        <i class="material-icons" style="font-size: 15px">email</i>
+                                        <a href="mailto:{{viewEnquiry.driver.email}}" target="_top">{{viewEnquiry.driver.email}}</a><br/><br/>
+                                    </div>
+                                    <br/>
+                                    <strong style="font-size: 20px">{{viewEnquiry.pickTime | date:
+                                        'shortTime'}}</strong><br/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <tooltip-content #viewGoogleMap>
+                                            <b>Click to view location on google map</b>
+                                        </tooltip-content>
+                                        <tooltip-content #dropLocation>
+                                            <b>Drop location</b>
+                                        </tooltip-content>
+                                    </div>
+
+                                    <span style="font-size: 12px">
+
+                                        <a [tooltip]="viewGoogleMap" [tooltipAnimation]="true" target="#"
+                                           href="{{viewEnquiry.location.url}}">
+                                            <i class="material-icons">location_on</i>
+                                            {{viewEnquiry.location.address}}
+                                        </a>
+                                        <br/>
+                                        <a [tooltip]="dropLocation" [tooltipAnimation]="true" style="color: black">
+                                            <i class="material-icons">my_location</i>
+                                            {{viewEnquiry.venueName}}
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: justify">
+                                    <div style="width: 100%" class="btn btn-rose">
+                                        {{viewEnquiry.calendar.startDate | date:'short'}}
+                                    </div>
+                                    <div style="width: 100%" class="btn btn-rose">
+                                        {{viewEnquiry.calendar.endDate | date:'short'}}
+                                    </div>
+                                    <br/>
+                                    Note : {{viewEnquiry.description}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <i class="material-icons" style="font-size: 13px">date_range</i>
+                            {{viewEnquiry.createdDate | date:'medium'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

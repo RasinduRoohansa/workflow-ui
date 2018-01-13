@@ -1,0 +1,22 @@
+.menu-item-st {
+    text-align: center;
+    font-family: 'Handlee', cursive;
+    font-size: 18px;
+}
+
+.menu-category-ft {
+    font-family: 'Satisfy', cursive;
+    font-size: 25px;
+    padding: 30px;
+}
+
+.menu-price {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card-menu {
+    background-image: url('/assets/menu-bg.jpg');
+    background-repeat: repeat-y;
+}

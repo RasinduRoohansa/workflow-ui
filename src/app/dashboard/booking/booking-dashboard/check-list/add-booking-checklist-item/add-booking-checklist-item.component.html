@@ -1,0 +1,73 @@
+<form (submit)="save()">
+    <div class="modal-dialog" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="close()">&times;</button>
+                <h4 class="modal-title">Add Check List Items</h4>
+                <p class="category">
+                    Add check list items to selected bookings.
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="form-group label-floating">
+                    <label class="control-label">Name/Description</label>
+                    <input required type="text" [(ngModel)]="checkItem.itemName" name="itemName"
+                           class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Check List Item Type</label>
+                            <select class="selectpicker" data-live-search="true"
+                                    data-style="select-with-transition"
+                                    (change)="changeEventType()"
+                                    name="sheduleType" [(ngModel)]="checkItem.sheduleType"
+                                    title="Type">
+                                <option selected value="{{null}}">NORMAL
+                                </option>
+                                <option selected value="AFTER">AFTER
+                                </option>
+                                <option selected value="BEFORE">BEFORE
+                                </option>
+                                <option selected value="ONTIME">ON TIME
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div *ngIf="checkItem.sheduleType == 'AFTER' || checkItem.sheduleType == 'BEFORE'">
+                            <div class="form-group">
+                                <label class="control-label">Minutes/Hours/Days</label>
+                                <select class="selectpicker" data-live-search="true"
+                                        data-style="select-with-transition"
+                                        required name="sheduleMinute" [(ngModel)]="checkItem.sheduleMinute"
+                                        title="Choose a time">
+                                    <option selected value="5">5 Minutes</option>
+                                    <option selected value="10">10 Minutes</option>
+                                    <option selected value="15">15 Minutes</option>
+                                    <option selected value="30">30 Minutes</option>
+                                    <option selected value="60">1 Hour</option>
+                                    <option selected value="120">2 Hour</option>
+                                    <option selected value="300">5 Hour</option>
+                                    <option selected value="3600">1 Day</option>
+                                    <option selected value="7200">2 Day</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="checkItem.sheduleType == 'ONTIME' ">
+                            <div class="form-group">
+                                <label class="control-label">Date & Time For Alert</label>
+                                <input type="text" id="scheduleTime" name="sheduleTime"
+                                       class="form-control datetimepicker" value="10/05/2016"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">ADD</button>
+                <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<form (submit)="saveEventType()">
+    <div class="modal-dialog" style="margin-top: 20px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="close()">&times;</button>
+                <h4 class="modal-title">{{update ? 'Update' : 'Add'}} Event Type</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Event Type</label>
+                            <input required type="text" [(ngModel)]="eventType.eventType" name="eventType"
+                                   class="form-control" pattern="[a-zA-Z0-9\s]+">
+                        </div>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Code</label>
+                            <input type="text" [(ngModel)]="eventType.code" name="code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div *ngIf="!image" class="select-img1" (click)="selectImg()">
+
+                        </div>
+                        <img (click)="selectImg()" class="view-big"
+                             style="cursor: pointer;border: 5px solid white;box-shadow: 0px 0px 1px 1px gainsboro"
+                             *ngIf="image" [src]="image.image"
+                             width="100%">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Description</label>
+                    <input type="text" [(ngModel)]="eventType.description" name="description"
+                           class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <img *ngIf="loading == true" width="50" src="assets/img/loading.gif">
+                <button [disabled]="loading" type="submit" class="btn btn-primary">
+                    {{update ? 'UPDATE' : 'ADD'}}
+                </button>
+                <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

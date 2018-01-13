@@ -1,0 +1,205 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row" id="top-row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">
+                                    Walk-Through & Create Quote
+                                </h4>
+                                <p class="category">
+                                    Answer for selected question template & create quotation with drag and drop feature.
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <tooltip-content #gobackTooltip>
+                                        <b>Go to enquiry page</b>
+                                    </tooltip-content>
+                                    <tooltip-content #changeTemplateToolTip>
+                                        <b>Change walk through question template</b>
+                                    </tooltip-content>
+                                    <tooltip-content #shoppingCartToolTip>
+                                        <b>Go to shopping cart panel</b>
+                                    </tooltip-content>
+                                    <tooltip-content #menuitems>
+                                        <b>Go to pick menu items</b>
+                                    </tooltip-content>
+                                    <tooltip-content #viewClientStoryTip>
+                                        <b>View Client Story</b>
+                                    </tooltip-content>
+                                </div>
+                                <button routerLink="/enquiry" type="button"
+                                        [tooltip]="gobackTooltip" [tooltipAnimation]="true"
+                                        class="btn btn-round btn-rose btn-just-icon pull-right">
+                                    <i class="material-icons">arrow_back</i>
+                                </button>
+                                <a scrollTo href="#shopping-cart-id" (click)="viewShoppingCart()"
+                                   [tooltip]="shoppingCartToolTip"
+                                   [tooltipAnimation]="true"
+                                   class="btn btn-warning btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">shopping_cart</i>
+                                </a>
+                                <a scrollTo href="#restaurant-menu-items" (click)="viewMenuItem()" [tooltip]="menuitems"
+                                   [tooltipAnimation]="true"
+                                   class="btn btn-warning btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">restaurant_menu</i>
+                                </a>
+                                <a scrollTo href="#restaurant-menu-items" (click)="viewClientStory()"
+                                   [tooltip]="viewClientStoryTip"
+                                   [tooltipAnimation]="true"
+                                   class="btn btn-warning btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">reorder</i>
+                                </a>
+                                <button type="button" (click)="changeTemplate()" *ngIf="step3 == true"
+                                        [tooltip]="changeTemplateToolTip" [tooltipAnimation]="true"
+                                        class="btn btn-success btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">restore_page</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content loading-box" style="padding: 30px" *ngIf="loading == true">
+                        <img style="width: 50px;"
+                             src="assets/fluid-loader.gif"/>
+                    </div>
+                    <div class="card-content" *ngIf="loading == false">
+                        <div class="row">
+                            <div class="col-md-3" style="text-align: center;">
+                                <img *ngIf="viewEnquiry.customer.profileImage != null"
+                                     style="cursor: pointer;border-radius: 100%;width:80px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                     class="view-big"
+                                     src="{{viewEnquiry.customer.profileImage}}"/>
+                                <img *ngIf="viewEnquiry.customer.profileImage == null"
+                                     style="cursor: pointer;border-radius: 100%;width:80px;box-shadow: 0px 0px 1px 1px gainsboro;"
+                                     class="view-big"
+                                     src="assets/img/propic.jpg">
+                            </div>
+                            <div class="col-md-9">
+
+                                <span style="font-size: 20px;font-style: italic">
+                                    {{viewEnquiry.customer.firstName}} {{viewEnquiry.customer.lastName}}
+                                </span>
+                                <strong>{{viewEnquiry.venueName}}</strong><br/>
+                                <span style="margin-top: 3px"
+                                      class="label label-info">{{viewEnquiry.eventType}}</span>
+                                {{getDescriptionShort(viewEnquiry.description)}}<br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" *ngIf="viewEnquiry">
+                        <span style="color: grey;font-size: 12px">
+                            From <strong>{{viewEnquiry.startDate | date:'short'}}</strong>
+                            To <strong>{{viewEnquiry.endDate | date:'short'}}</strong>
+                        </span>
+                        <span style="color: grey;font-size: 12px">
+                            <i class="material-icons" style="font-size: 12px;margin-top: 5px">date_range</i>
+                            {{viewEnquiry.createdDate | date:'medium'}}
+                        </span>
+                    </div>
+                </div>
+                <form *ngIf="step1 == true" (submit)="saveClientStory()">
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="green">
+                            <i class="material-icons">assignment_ind</i>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="card-title">Client Story</h4>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Client story is here</label>
+                                <input [(ngModel)]="clientStory" name="clientStory" required type="text"
+                                       class="form-control">
+                                <br/>
+                                <span style="color: grey">( This field only allows up to 2000 characters. )</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="pull-right" style="margin-bottom: 10px">
+                                <button type="submit" class="btn btn-primary">
+                                    SAVE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form *ngIf="step3 == true" (submit)="saveAndNextQuestion()">
+                    <div *ngIf="currentQuestion">
+                        <div class="card">
+                            <div class="card-header card-header-icon" data-background-color="green">
+                                <i class="material-icons">{{currentQuestion.type.icon}}</i>
+                            </div>
+                            <div class="card-content">
+                                <h4 class="card-title">{{currentQuestion.question}}</h4>
+
+                                <div *ngIf="!finishButton">
+                                    <!--short answer-->
+                                    <div *ngIf="currentQuestion.type.code == 'QN1'" id="short-answer">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Short answer text</label>
+                                            <input [(ngModel)]="answer.answer" name="shortanswer" required type="text"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--paragraph-->
+                                    <div *ngIf="currentQuestion.type.code == 'QN2'" id="paragraph">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Paragraph topic</label>
+                                            <input [(ngModel)]="answer.answerHeadline" required name="untitledquestion"
+                                                   type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Paragraph answer text</label>
+                                            <input [(ngModel)]="answer.answer" required name="paraanaswer" type="text"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--Single Choice-->
+                                    <div *ngIf="currentQuestion.type.code == 'QN3'" id="single-choice">
+                                        <div>
+                                            <div *ngFor="let option of currentQuestion.optionList" class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios"
+                                                           [(ngModel)]="answer.fkQuestionSingleOption"
+                                                           [value]="option.id">
+                                                    {{option.optionText}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div *ngIf="currentQuestion" style="color: grey">
+                                    <i class="material-icons" style="font-size: 13px">person</i>
+                                    {{currentQuestion.createdByFullname}}
+                                    | <i class="material-icons" style="font-size: 13px">date_range</i>
+                                    {{currentQuestion.createdDate|
+                                    date:'medium'}}
+                                </div>
+                                <div class="pull-right" style="margin-bottom: 10px">
+                                    <button type="button"
+                                            (click)="bookNow()" *ngIf="finishButton" class="btn btn-success">
+                                        BOOK NOW
+                                    </button>
+                                    <button [disabled]="finishButton" type="submit" class="btn btn-primary">
+                                        NEXT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="restaurant-menu-items" *ngIf="step2 == true">
+            <app-pick-menu-item [referenceParent]="this"></app-pick-menu-item>
+        </div>
+        <div id="shopping-card-set" *ngIf="walkthrough && step3 == true">
+            <shopping-cart [fkWalkThroughId]="walkthrough.id"></shopping-cart>
+        </div>
+    </div>
+</div>
